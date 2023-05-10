@@ -9,6 +9,11 @@ import (
 
 func Handler(cookie string) {
 
+	list := []List{}
+	rep := &Rep{}
+	i := 0
+	j := 2
+
 	if cookie == "" {
 		cookie = "acw_tc=2760820416836328501224677eec1e85f4fd0a7ea63a3eacfa8050bf904c24"
 	}
@@ -34,19 +39,19 @@ func Handler(cookie string) {
 		r.Headers.Add("sec-ch-ua-platform", "\"Windows\"")
 
 	})
-	list := []List{}
-	rep := &Rep{}
+
 	c.OnResponse(func(r *colly.Response) {
 		_ = json.Unmarshal(r.Body, rep)
 		for i := 0; i < len(rep.Data); i++ {
 			list = append(list, *rep.Data[i])
-			fmt.Printf("data:%+V", rep.Data)
+			//fmt.Printf("data:%+V\n", rep.Data)
 		}
 	})
-	i := 0
+
 	for {
+
 		req := &Req{
-			Category: []string{"2"},
+			Category: j,
 			DisplayFields: []string{"Category",
 				"Kind",
 				"LocId",
@@ -72,12 +77,19 @@ func Handler(cookie string) {
 			fmt.Println("-=-=", err)
 			return
 		}
-		fmt.Println(i)
+
 		i++
 		if len(rep.Data) < 1 {
-			break
+
+			if j == 3 {
+				break
+			}
+			j++
+			i = 0
 		}
 	}
-	fmt.Println(rep.Data)
-	fmt.Println(list)
+	fmt.Println(j)
+
+	fmt.Println(len(list))
+
 }

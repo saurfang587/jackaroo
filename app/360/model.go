@@ -1,7 +1,7 @@
 package _60
 
 type Req struct {
-	Category      []string `json:"Category"`
+	Category      int      `json:"Category"`
 	DisplayFields []string `json:"DisplayFields"`
 	KeyWords      string   `json:"KeyWords"`
 	PageIndex     int      `json:"PageIndex"`
