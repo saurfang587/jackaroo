@@ -1,9 +1,7 @@
 package main
 
-import (
-	_60 "xiangxiang/jackaroo/app/360"
-)
+import "xiangxiang/jackaroo/app/huawei"
 
 func main() {
-	_60.Handler("")
+	huawei.Handler("")
 }
