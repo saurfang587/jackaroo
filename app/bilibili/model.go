@@ -34,7 +34,15 @@ type Kind struct {
 	PageNum  int       `json:"pageNum"`
 	PageSize int       `json:"pageSize"`
 	List     []ListObj `json:"list"`
+	Pages    int       `json:"pages"`
 }
 type ListObj struct {
 	Id string `json:"id"`
+}
+
+// 获取token
+type SCRFRep struct {
+	Code    int    `json:"code"`
+	Data    string `json:"data"`
+	Message string `json:"message"`
 }
