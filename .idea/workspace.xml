@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +51,6 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\GoProduct\jackaroo" />
       <recent name="D:\GoProduct\jackaroo\jackaroo\app\bilibili" />
     </key>
   </component>
@@ -87,7 +84,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="dev_20230508_wei" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
