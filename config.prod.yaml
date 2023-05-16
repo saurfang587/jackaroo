@@ -9,7 +9,7 @@ jwt:
 mysql:
   path: '127.0.0.1:3306'
   config: 'charset=utf8mb4&parseTime=True&loc=Local'
-  db-name: 'jackaroo'
+  db-name: 'test'
   username: 'root'
   password: '123456'
   max-idle-conns: 200

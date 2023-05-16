@@ -38,7 +38,7 @@ func Handler(cookie string) {
 		r.Headers.Add("x-csrf-token", token)
 
 	})
-	list := []interface{}{}
+	list := []List{}
 	rep := &Rep{}
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, rep)
@@ -76,9 +76,10 @@ func Handler(cookie string) {
 			break
 		}
 	}
-	fmt.Println(rep.Code)
-	fmt.Println(len(list))
-	fmt.Println(list)
+	//fmt.Println(rep.Code)
+	//fmt.Println(len(list))
+	//fmt.Println(list)
+	lilisiOrm(list)
 }
 
 func GetCSRF() string {

@@ -43,7 +43,7 @@ func Handler(cookie string) {
 		_ = json.Unmarshal(r.Body, rep)
 		for i := 0; i < len(rep.Data.List); i++ {
 			list = append(list, *rep.Data.List[i])
-			fmt.Printf("data:%+V", rep.Data)
+			//fmt.Printf("data:%+V", rep.Data)
 		}
 		//fmt.Println(rep.Data)
 	})
@@ -74,7 +74,8 @@ func Handler(cookie string) {
 			break
 		}
 	}
-	fmt.Println(list)
+
+	zijieOrm(list)
 }
 
 func GetCSRF() string {

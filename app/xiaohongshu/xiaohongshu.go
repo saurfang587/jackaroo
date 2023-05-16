@@ -43,13 +43,7 @@ func Handler(cookie string) {
 			//fmt.Printf("data:%+V", rep.Data)
 		}
 	})
-	//defer func() { // 必须要先声明defer，否则不能捕获到panic异常
-	//	fmt.Println("捕获小红书页数越界")
-	//	if err := recover(); err != nil {
-	//		fmt.Println(err) // 这里的err其实就是panic传入的内容，55
-	//	}
-	//	fmt.Println("捕获成功")
-	//}()
+
 	i := 1
 	for {
 		req := &Req{
@@ -72,6 +66,7 @@ func Handler(cookie string) {
 			break
 		}
 	}
-	fmt.Println(list)
+	//fmt.Println(list)
+	xiaohongshuOrm(list)
 
 }

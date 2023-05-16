@@ -2,7 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"xiangxiang/jackaroo/app/huawei"
+	"xiangxiang/jackaroo/app/zijie"
 	"xiangxiang/jackaroo/global"
 	"xiangxiang/jackaroo/inital"
 )
@@ -17,5 +17,5 @@ func main() {
 		}(db)
 	}
 
-	huawei.Handler("")
+	zijie.Handler("")
 }

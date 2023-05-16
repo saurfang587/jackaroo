@@ -40,9 +40,7 @@ type List struct {
 	Title       string      `json:"title"`
 	JobCategory interface{} `json:"job_category"`
 	Description string      `json:"description"`
-	//JobFunction interface{} `json:"job_Function"`
-	//JobSubject  interface{} `json:"job_Subject"`
-	//Name        string      `json:"name"`
+	CityList    interface{} `json:"city_list"`
 	RecruitType interface{} `json:"recruit_Type"`
 	Requirement string      `json:"requirement"`
 }

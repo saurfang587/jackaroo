@@ -17,6 +17,7 @@ type Rep struct {
 }
 
 type List struct {
+	Id                string   `json:"Id"`
 	Category          string   `json:"Category,omitempty"`
 	CategoryId        string   `json:"CategoryId,omitempty"`
 	ClassificationOne string   `json:"ClassificationOne,omitempty"`

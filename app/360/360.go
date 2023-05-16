@@ -88,8 +88,8 @@ func Handler(cookie string) {
 			i = 0
 		}
 	}
-	fmt.Println(j)
-
-	fmt.Println(len(list))
+	//fmt.Println(j)
+	_60Orm(list)
+	//fmt.Println(len(list))
 
 }

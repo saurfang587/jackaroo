@@ -20,14 +20,30 @@ type Rep struct {
 	Data []*List `json:"result"`
 }
 
+type Rep1 struct {
+	Data []*List1
+}
+
 type List struct {
-	JobId         string `json:"jobId"`
-	NameCn        string `json:"nameCn"`
-	Jobname       string `json:"jobname"`
-	MainBusiness  string `json:"mainBusiness"`
-	JobRequire    string `json:"jobRequire"`
-	JobFamilyName string `json:"jobFamilyName"`
-	JobAddressId  string `json:"jobAddressId"`
-	CityIds       string `json:"cityIds"`
-	JobArea       string `json:"jobArea"`
+	GraduateItem     int    `json:"graduateItem"`
+	DataSource       int    `json:"dataSource"`
+	JobId            int    `json:"jobId"`
+	JobRequirementId int    `json:"jobRequirementId"`
+	NameCn           string `json:"nameCn"`
+	Jobname          string `json:"jobname"`
+	MainBusiness     string `json:"mainBusiness"`
+	JobRequire       string `json:"jobRequire"`
+	JobFamilyName    string `json:"jobFamilyName"`
+	JobAddressId     string `json:"jobAddressId"`
+	CityIds          string `json:"cityIds"`
+	JobArea          string `json:"jobArea"`
+	WorkArea         string `json:"workArea"`
+}
+
+type List1 struct {
+	DEMAND       string `json:"DEMAND"`
+	DEPTCODES    string `json:"DEPTCODES"`
+	DISPLAYNAME  string `json:"DISPLAYNAME"`
+	LOCDESCS     string `json:"LOCDESCS"`
+	MAINBUSINESS string `json:"MAINBUSINESS"`
 }

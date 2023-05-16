@@ -37,11 +37,33 @@ type Token struct {
 type List struct {
 	Id          string      `json:"id"`
 	Title       string      `json:"title"`
-	JobCategory interface{} `json:"job_category"`
+	JobCategory JobCategory `json:"job_category"`
 	Description string      `json:"description"`
 	JobFunction interface{} `json:"job_Function"`
-	JobSubject  interface{} `json:"job_Subject"`
+	JobSubject  JobSubject  `json:"job_Subject"`
 	Name        string      `json:"name"`
-	RecruitType interface{} `json:"recruit_Type"`
-	Requirement string      `json:"requirement"`
+	//RecruitType RecruitType `json:"recruit_Type"`
+	Requirement string `json:"requirement"`
+	City        []City `json:"city_list"`
+}
+
+type JobCategory struct {
+	Name   string `json:"name"`
+	Parent parent `json:"parent"`
+}
+
+type parent struct {
+	Name string `json:"name"`
+}
+
+type JobSubject struct {
+	Name name `json:"name"`
+}
+
+type name struct {
+	Name string `json:"zh_cn"`
+}
+
+type City struct {
+	Name string `json:"name,omitempty"`
 }

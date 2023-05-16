@@ -2,7 +2,6 @@ package xiaomi
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gocolly/colly"
 	"net/http"
 )
@@ -42,7 +41,6 @@ func Handler(cookie string) {
 		_ = json.Unmarshal(r.Body, rep)
 		for i := 0; i < len(rep.Data.List); i++ {
 			list = append(list, *rep.Data.List[i])
-			//fmt.Printf("data:%+V", rep.Data)
 		}
 	})
 	i := 0
@@ -61,14 +59,14 @@ func Handler(cookie string) {
 			_Signature:        "",
 		}
 		b, _ := json.Marshal(req)
-
 		_ = c.PostRaw("https://xiaomi.jobs.f.mioffice.cn/api/v1/search/job/posts?keyword=&limit=10&offset=0&job_category_id_list=&location_code_list=&subject_id_list=&recruitment_id_list=&portal_type=6&job_function_id_list=&portal_entrance=1&_signature=LGyWRwAAAAB0riZdHOafHSxsllAAEg5", b)
 		i++
 		if len(rep.Data.List) < 1 {
 			break
 		}
 	}
-	fmt.Println(list)
+
+	xiaomiOrm(list)
 }
 
 func GetCSRF() string {
@@ -102,9 +100,9 @@ func GetCSRF() string {
 
 		err := json.Unmarshal(r.Body, rep)
 		if err != nil {
-			fmt.Println("=-=-", err)
+			return
 		}
-		fmt.Printf("data:%+V", rep.Data)
+
 	})
 
 	_ = c.PostRaw("https://xiaomi.jobs.f.mioffice.cn/api/v1/csrf/token", nil)
