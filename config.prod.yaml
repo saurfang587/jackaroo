@@ -1,0 +1,63 @@
+# jwt configuration
+jwt:
+  signing-key: 'fast'
+  expires-time: 7d
+  buffer-time: 1d
+  Issuer: "fast_gin"
+
+# mysql connect configuration
+mysql:
+  path: '127.0.0.1:3306'
+  config: 'charset=utf8mb4&parseTime=True&loc=Local'
+  db-name: 'jackaroo'
+  username: 'root'
+  password: '123456'
+  max-idle-conns: 200
+  max-open-conns: 800
+  conn-max-lifetime: 18000000000000 # 五个小时
+  log-mode: 'error'
+  log-zap: false
+
+redis:
+  addr: "127.0.0.1:6379"
+  db: 11
+  maxretries: 3
+  minidleconns: 5
+  password: ""
+  poolsize: 10
+
+system:
+  env: 'public'  # Change to "develop" to skip authentication for development mode
+  port: 8089
+  enabled-multipoint: true
+  oss-type: 'local'
+  enable-cors: true
+  enable-redis: true
+
+captcha:
+  type: "digit"  # audio:音频; string:字母数字; math:算术运算; chinese:汉字; digit:纯数字;
+  expire-time: "30m"   #验证码有效时间  3m  为 3分钟
+
+zap:
+  level: info
+  prefix: ''
+  format: console
+  director: log
+  encode-level: LowercaseLevelEncoder
+  stacktrace-key: stacktrace
+  max-age: 0
+  show-line: true
+  log-in-console: true
+
+swagger:
+  enabled: true
+  title: "Fast-Gin API"
+  description: "Fast-Gin is a lightweight, front-end separated Go rapid development platform for rapid project development and delivery"
+  version: "1.0"
+  host: "127.0.0.1:8089"
+  base-path: "/"
+  schemes: [ "http","https" ]
+
+#本地
+local:
+  local-file-path: uploads/file

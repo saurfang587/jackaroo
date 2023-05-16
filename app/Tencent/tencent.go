@@ -6,6 +6,7 @@ import (
 	"github.com/gocolly/colly"
 	"strconv"
 	"time"
+	"xiangxiang/jackaroo/global"
 )
 
 // var AllTencent []Each
@@ -14,10 +15,30 @@ var each *[]Each
 var AllInformation []Content3
 
 func Header(cookie string) {
+	time1 := time.Now().Format("2006-01-02 15:04:05")
 	each := Get()
-	//fmt.Println(each)
 	Get1(each)
-	fmt.Println(AllInformation)
+	err1 := global.G_DB.AutoMigrate(&Tencent1{})
+	if err1 != nil {
+		fmt.Println("数据库迁移失败")
+	}
+	for i := 0; i < len(AllInformation); i++ {
+		information := &Tencent1{
+			ID:            AllInformation[i].Id,
+			Company:       "腾讯",
+			Title:         AllInformation[i].Title,
+			Job_category:  "2023校园招聘",
+			Job_type_name: AllInformation[i].Job_type_name,
+			Job_detail:    AllInformation[i].Job_Detail + AllInformation[i].Job_Obj,
+			WorkLocation:  AllInformation[i].WorkPlace[0],
+			Fetch_time:    time1,
+		}
+		err1 := global.G_DB.Create(information).Error
+		if err1 != nil {
+			fmt.Println("插入数据失败了，请查看并修改错误")
+			return
+		}
+	}
 }
 
 // 获取所有页面的链接

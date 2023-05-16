@@ -8,15 +8,28 @@ type Context1 struct {
 	Message string   `json:"message"`
 }
 type BiliBili struct {
-	id                  int    `gorm:"primaryKey";column:"ID"`
-	PositionName        string `json:"positionName" gorm:"column:positionName"`               //工作名字
-	PositionTypeName    string `json:"positionTypeName" gorm:"column:positionTypeName"`       //工作类型
-	PostCodeName        string `json:"postCodeName" gorm:"column:postCodeName"`               //工作种类
-	PositionDescription string `json:"positionDescription" gorm:"column:positionDescription"` //工作职责
-	WorkLocation        string `json:"workLocation" gorm:"column:workLocation"`               //工作地点
-	PushTime            string `json:"pushTime" gorm:"column:pushTime"`                       //发布时间
-	WebApplyEndTime     string `json:"webApplyEndTime" gorm:"column:webApplyEndTime"`         //网申结束时间
-	WebApplyStartTime   string `json:"webApplyStartTime" gorm:"column:webApplyStartTime"`     //网申开始时间
+	ID            string `json:"id" column:"id"`                               // 公司id
+	Title         string `json:"positionName" gorm:"column:title"`             //工作名字
+	Job_category  string `json:"postCodeName" gorm:"column:job_category"`      //工作类型
+	Job_type_name string `json:"positionTypeName" gorm:"column:job_type_name"` //工作种类
+	Job_detail    string `json:"positionDescription" gorm:"column:job_detail"` //工作职责
+	WorkLocation  string `json:"workLocation" gorm:"column:job_location"`      //工作地点
+}
+type BiliBili2 struct {
+	Uuid          int    `gorm:"primaryKey;column:uuid"`
+	ID            string `json:"id" column:"id"`
+	Company       string `gorm:"column:company"`                   // 公司id
+	Title         string ` gorm:"column:title"`                    //工作名字
+	Job_category  string `gorm:"column:job_category"`              //工作类型
+	Job_type_name string ` gorm:"column:job_type_name"`            //工作种类
+	Job_detail    string ` gorm:"column:job_detail;type:longtext"` //工作职责
+	WorkLocation  string `gorm:"column:job_location"`
+	//Information BiliBili `gorm:"foreignKey:BiliBiliID_id"`
+	//BiliBiliID  string   `gorm:"column:id"` // 外键
+	Fetch_time string `gorm:"column:fetch_time"`
+}
+type BiliBili1 struct {
+	Information []BiliBili
 }
 
 // ---------------------------
@@ -45,4 +58,9 @@ type SCRFRep struct {
 	Code    int    `json:"code"`
 	Data    string `json:"data"`
 	Message string `json:"message"`
+}
+
+// 设置表名 为 bilibili
+func (BiliBili2) TableName() string {
+	return "bilibili"
 }

@@ -8,9 +8,11 @@ import (
 	"gopkg.in/headzoo/surf.v1"
 	"log"
 	"strconv"
+	"time"
+	"xiangxiang/jackaroo/global"
 )
 
-var Allali []Context1
+var Allali []Alibaba
 
 // 阿里实习生
 func Header(cookie string) {
@@ -24,12 +26,35 @@ func Header(cookie string) {
 	// 获取 Cookie
 	cookies := browser.SiteCookies()
 	cookie1 := cookies[0].String()[11:]
-	fmt.Println(cookie1)
-	//Get(cookie1)
+	Get_time := Get(cookie1)
 	Get1(cookie1)
-	fmt.Println(Allali)
+	fmt.Println(cookie1)
+	err1 := global.G_DB.AutoMigrate(&Alibaba1{})
+	if err1 != nil {
+		fmt.Println("数据库迁移失败")
+	}
+	for i := 0; i < len(Allali); i++ {
+		information := &Alibaba1{
+			ID:            Allali[i].Id,
+			Company:       "阿里巴巴",
+			Title:         Allali[i].Title,
+			Job_category:  Allali[i].Job_category,
+			Job_type_name: Allali[i].Job_type_name,
+			Job_detail:    Allali[i].Job_Detail + Allali[i].Job_Obj,
+			WorkLocation:  Allali[i].WorkLocation,
+			Fetch_time:    Get_time,
+		}
+		err1 := global.G_DB.Create(information).Error
+		if err1 != nil {
+			fmt.Println("插入数据失败了，请查看并修改错误")
+			return
+		}
+	}
 }
-func Get(cookie1 string) {
+
+// 获取实习生
+func Get(cookie1 string) string {
+	time1 := time.Now().Format("2006-01-02 15:04:05")
 	c := colly.NewCollector()
 	c.OnRequest(func(req *colly.Request) {
 		req.Headers.Set("authority", "talent.alibaba.com")
@@ -52,13 +77,13 @@ func Get(cookie1 string) {
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, &test)
 		if err != nil {
-			fmt.Println("json解析错误")
+			fmt.Println("json解析错误", err)
 			return
 		}
 		if len(test.Data.Data1) < 1 {
 			return
 		}
-		Allali = append(Allali, test)
+		Allali = append(Allali, test.Data.Data1...)
 	})
 	i := 1
 	for {
@@ -80,13 +105,14 @@ func Get(cookie1 string) {
 		err := c.PostRaw("https://talent.alibaba.com/position/search?_csrf="+cookie1, Data)
 		if err != nil {
 			fmt.Printf("抓取第: %d出错", i)
-			return
+			return ""
 		}
 		i++
 		if len(test.Data.Data1) < 1 {
-			return
+			return ""
 		}
 	}
+	return time1
 }
 
 // 项目制实习生
@@ -113,13 +139,13 @@ func Get1(cookie string) {
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, &test)
 		if err != nil {
-			fmt.Println("json解析错误")
+			fmt.Println("json解析错误", err)
 			return
 		}
 		if len(test.Data.Data1) < 1 {
 			return
 		}
-		Allali = append(Allali, test)
+		Allali = append(Allali, test.Data.Data1...)
 	})
 	i := 1
 	for {

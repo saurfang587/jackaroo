@@ -5,12 +5,38 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"strconv"
+	"time"
+	"xiangxiang/jackaroo/global"
 )
 
-var hello Contont
-var AllInformation []Contont
+var AllInformation []Baidu
 
 func Header(cookie string) {
+	Get_time := Get()
+	err1 := global.G_DB.AutoMigrate(&Baidu1{})
+	if err1 != nil {
+		fmt.Println("数据库迁移失败")
+	}
+	for i := 0; i < len(AllInformation); i++ {
+		information := &Baidu1{
+			ID:            AllInformation[i].Id,
+			Company:       "百度",
+			Title:         AllInformation[i].Title,
+			Job_category:  AllInformation[i].Job_category,
+			Job_type_name: "校招",
+			Job_detail:    AllInformation[i].Job_Detail + AllInformation[i].Job_Obj,
+			WorkLocation:  AllInformation[i].WorkPlace,
+			Fetch_time:    Get_time,
+		}
+		err1 := global.G_DB.Create(information).Error
+		if err1 != nil {
+			fmt.Println("插入数据失败了，请查看并修改错误")
+			return
+		}
+	}
+}
+func Get() string {
+	time1 := time.Now().Format("2006-01-02 15:04:05")
 	//创建请求
 	c := colly.NewCollector(
 		colly.AllowURLRevisit(),
@@ -43,7 +69,7 @@ func Header(cookie string) {
 		if len(test1.Data.List) < 1 {
 			return
 		}
-		AllInformation = append(AllInformation, test1)
+		AllInformation = append(AllInformation, test1.Data.List...)
 		//fmt.Println(AllInformation
 		//fmt.Println("这是输出", len(AllInformation))
 		//在编程中，c.Wait()通常是指等待某个事件的发生并阻塞当前线程的执行，直到该事件完成或超时
@@ -65,7 +91,7 @@ func Header(cookie string) {
 		}
 	}
 	Fetch1()
-	fmt.Println(AllInformation)
+	return time1
 }
 
 // 实习生招聘
@@ -98,7 +124,7 @@ func Fetch1() {
 		if len(test.Data.List) < 1 {
 			return
 		}
-		AllInformation = append(AllInformation, test)
+		AllInformation = append(AllInformation, test.Data.List...)
 	})
 	i := 1
 	for {

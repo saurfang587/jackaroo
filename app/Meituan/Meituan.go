@@ -4,13 +4,36 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocolly/colly"
+	"time"
+	"xiangxiang/jackaroo/global"
 )
 
 var AllMeituan []Meituan
 
 func Header(cookie string) {
 	Get()
-	fmt.Println(AllMeituan)
+	time1 := time.Now().Format("2006-01-02 15:04:05")
+	err1 := global.G_DB.AutoMigrate(&Meituan1{})
+	if err1 != nil {
+		fmt.Println("数据库迁移失败")
+	}
+	for i := 0; i < len(AllMeituan); i++ {
+		information := &Meituan1{
+			ID:            AllMeituan[i].Id,
+			Company:       "美团",
+			Title:         AllMeituan[i].Title,
+			Job_category:  AllMeituan[i].Job_category,
+			Job_type_name: "实习生",
+			Job_detail:    AllMeituan[i].Job_Detail + AllMeituan[i].Job_Obj,
+			WorkLocation:  AllMeituan[i].WorkPlace[0].Name,
+			Fetch_time:    time1,
+		}
+		err1 := global.G_DB.Create(information).Error
+		if err1 != nil {
+			fmt.Println("插入数据失败了，请查看并修改错误")
+			return
+		}
+	}
 }
 func Get() {
 	c := colly.NewCollector()

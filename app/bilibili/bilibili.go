@@ -4,11 +4,40 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocolly/colly"
+	time2 "time"
+	"xiangxiang/jackaroo/global"
 )
 
 var Allid []string
+var AllBilibili BiliBili1
 
 func Header(cookie string) {
+	Get_time := Get()
+	err := global.G_DB.AutoMigrate(&BiliBili2{})
+	if err != nil {
+		fmt.Println("数据库迁移失败")
+	}
+	//fmt.Println(AllBilibili)
+	for i := 0; i < len(AllBilibili.Information); i++ {
+		information := &BiliBili2{
+			ID:            AllBilibili.Information[i].ID,
+			Company:       "哔哩哔哩",
+			Title:         AllBilibili.Information[i].Title,
+			Job_category:  AllBilibili.Information[i].Job_category,
+			Job_type_name: AllBilibili.Information[i].Job_type_name,
+			Job_detail:    AllBilibili.Information[i].Job_detail,
+			WorkLocation:  AllBilibili.Information[i].WorkLocation,
+			Fetch_time:    Get_time,
+		}
+		err1 := global.G_DB.Create(information).Error
+		if err1 != nil {
+			fmt.Println("插入数据失败了，请查看并修改错误")
+			return
+		}
+	}
+}
+func Get() string {
+	time1 := time2.Now().Format("2006-01-02 15:04:05")
 	token := GetAdd()
 	c := colly.NewCollector()
 	// 设置请求头
@@ -57,12 +86,13 @@ func Header(cookie string) {
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return ""
 	}
 	err = c.PostRaw("https://jobs.bilibili.com/api/campus/position/positionList", jsonData)
 	if err != nil {
 		fmt.Println("请求失败：", err)
 	}
+	return time1
 }
 
 // 爬取每个id
@@ -129,6 +159,7 @@ func FetchEach(num int) {
 		if err != nil {
 			fmt.Println("请求第", i, "页失败：", err)
 		}
+		fmt.Println("正在爬取第", i, "页")
 	}
 }
 
@@ -162,8 +193,9 @@ func FetchInformation() {
 			fmt.Println("解析json数据失败：", err)
 			return
 		}
-		fmt.Println(res.Data)
+		AllBilibili.Information = append(AllBilibili.Information, res.Data)
 	})
+	//len(Allid)
 	for i := 0; i < len(Allid); i++ {
 		url := "https://jobs.bilibili.com/api/campus/position/detail/" + Allid[i]
 		err := c.Visit(url)
