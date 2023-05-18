@@ -26,15 +26,16 @@ func Header(cookie string) {
 	// 获取 Cookie
 	cookies := browser.SiteCookies()
 	cookie1 := cookies[0].String()[11:]
-	Get_time := Get(cookie1)
+	Get(cookie1)
+	time1 := time.Now().Format("2006-01-02 15:04:05")
 	Get1(cookie1)
 	fmt.Println(cookie1)
-	err1 := global.G_DB.AutoMigrate(&Alibaba1{})
+	err1 := global.G_DB.AutoMigrate(&Hello{})
 	if err1 != nil {
 		fmt.Println("数据库迁移失败")
 	}
 	for i := 0; i < len(Allali); i++ {
-		information := &Alibaba1{
+		information := &Hello{
 			ID:            Allali[i].Id,
 			Company:       "阿里巴巴",
 			Title:         Allali[i].Title,
@@ -42,7 +43,7 @@ func Header(cookie string) {
 			Job_type_name: Allali[i].Job_type_name,
 			Job_detail:    Allali[i].Job_Detail + Allali[i].Job_Obj,
 			WorkLocation:  Allali[i].WorkLocation,
-			Fetch_time:    Get_time,
+			Fetch_time:    time1,
 		}
 		err1 := global.G_DB.Create(information).Error
 		if err1 != nil {
@@ -53,8 +54,7 @@ func Header(cookie string) {
 }
 
 // 获取实习生
-func Get(cookie1 string) string {
-	time1 := time.Now().Format("2006-01-02 15:04:05")
+func Get(cookie1 string) {
 	c := colly.NewCollector()
 	c.OnRequest(func(req *colly.Request) {
 		req.Headers.Set("authority", "talent.alibaba.com")
@@ -105,14 +105,13 @@ func Get(cookie1 string) string {
 		err := c.PostRaw("https://talent.alibaba.com/position/search?_csrf="+cookie1, Data)
 		if err != nil {
 			fmt.Printf("抓取第: %d出错", i)
-			return ""
+			return
 		}
 		i++
 		if len(test.Data.Data1) < 1 {
-			return ""
+			return
 		}
 	}
-	return time1
 }
 
 // 项目制实习生

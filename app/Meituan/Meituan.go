@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocolly/colly"
+	"strconv"
 	"time"
+	"xiangxiang/jackaroo/app/Alibaba"
 	"xiangxiang/jackaroo/global"
 )
 
@@ -13,19 +15,23 @@ var AllMeituan []Meituan
 func Header(cookie string) {
 	Get()
 	time1 := time.Now().Format("2006-01-02 15:04:05")
-	err1 := global.G_DB.AutoMigrate(&Meituan1{})
+	err1 := global.G_DB.AutoMigrate(&Alibaba.Hello{})
 	if err1 != nil {
 		fmt.Println("数据库迁移失败")
 	}
 	for i := 0; i < len(AllMeituan); i++ {
-		information := &Meituan1{
-			ID:            AllMeituan[i].Id,
+		str, _ := strconv.Atoi(AllMeituan[i].Id)
+		if len(AllMeituan[i].WorkPlace) < 1 {
+			continue
+		}
+		information := &Alibaba.Hello{
+			ID:            str,
 			Company:       "美团",
 			Title:         AllMeituan[i].Title,
 			Job_category:  AllMeituan[i].Job_category,
 			Job_type_name: "实习生",
 			Job_detail:    AllMeituan[i].Job_Detail + AllMeituan[i].Job_Obj,
-			WorkLocation:  AllMeituan[i].WorkPlace[0].Name,
+			WorkLocation:  Alibaba.Work{AllMeituan[i].WorkPlace[0].City},
 			Fetch_time:    time1,
 		}
 		err1 := global.G_DB.Create(information).Error
@@ -58,11 +64,18 @@ func Get() {
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, &test)
 		if err != nil {
-			fmt.Println("json数据解析失败")
+			fmt.Println("json数据解析失败", err)
 		}
 		if len(test.Data.List) < 1 {
 			return
 		}
+		//if len(test.Data.List) < 10 {
+		//	for i := 0; i < len(test.Data.List); i++ {
+		//		if test.Data.List[i].WorkPlace[0].City == "" {
+		//			return
+		//		}
+		//	}
+		//}
 		AllMeituan = append(AllMeituan, test.Data.List...)
 	})
 

@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="">
+    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="合并wen的代码">
+      <change afterPath="$PROJECT_DIR$/app/jingdong/jingdong.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/jingdong/model.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/mihoyo/mihoyo.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/mihoyo/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Aiqiyi/Aiqiyi.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Aiqiyi/model.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Alibaba/alibaba.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Alibaba/alibaba.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Alibaba/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Alibaba/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Baidu/baidu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Baidu/baidu.go" afterDir="false" />
@@ -22,19 +24,12 @@
       <change beforePath="$PROJECT_DIR$/app/Weiruan/weiruan.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Weiruan/weiruan.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/bilibili/bilibili.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/bilibili/bilibili.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/bilibili/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/bilibili/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/xiaohongshu/model.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/xiaohongshu/xiaohongshu.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <list id="2144b9f8-6ce9-4ee2-b3e5-453731f2f4f0" name="wen更改" comment="" />
-    <list id="28415d43-032e-4db0-afe5-555bc52775a2" name="添加数据库" comment="">
-      <change afterPath="$PROJECT_DIR$/config.prod.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/mysql.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/global/global.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inital/gorm.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inital/viper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-    </list>
+    <list id="28415d43-032e-4db0-afe5-555bc52775a2" name="添加数据库" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,13 +98,31 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration name="go build alibaba.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build Meituan.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="jackaroo" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
       <package value="Sprider" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/Alibaba/alibaba.go" />
+      <filePath value="$PROJECT_DIR$/app/Meituan/Meituan.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build bilibili.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="jackaroo" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <package value="Sprider" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/bilibili/bilibili.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build jingdong.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="jackaroo" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <package value="Sprider" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/jingdong/jingdong.go" />
       <method v="2" />
     </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -121,31 +134,13 @@
       <filePath value="$PROJECT_DIR$/main.go" />
       <method v="2" />
     </configuration>
-    <configuration name="go build tencent.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build mihoyo.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="jackaroo" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
       <package value="Sprider" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/Tencent/tencent.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build weiruan.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="jackaroo" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <package value="Sprider" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/Weiruan/weiruan.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build xiangxiang/jackaroo" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="jackaroo" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="xiangxiang/jackaroo" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/main.go" />
+      <filePath value="$PROJECT_DIR$/app/mihoyo/mihoyo.go" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
@@ -161,10 +156,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Go 构建.go build main.go" />
-        <item itemvalue="Go 构建.go build weiruan.go" />
-        <item itemvalue="Go 构建.go build tencent.go" />
-        <item itemvalue="Go 构建.go build xiangxiang/jackaroo" />
-        <item itemvalue="Go 构建.go build alibaba.go" />
+        <item itemvalue="Go 构建.go build mihoyo.go" />
+        <item itemvalue="Go 构建.go build Meituan.go" />
+        <item itemvalue="Go 构建.go build bilibili.go" />
+        <item itemvalue="Go 构建.go build jingdong.go" />
       </list>
     </recent_temporary>
   </component>

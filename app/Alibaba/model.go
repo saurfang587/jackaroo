@@ -28,7 +28,7 @@ type Alibaba struct {
 	Job_Detail    string   `json:"requirement"`   //工作内容 需要合并到上条中
 	WorkLocation  []string `json:"workLocations"` //工作地点
 }
-type Alibaba1 struct {
+type Hello struct {
 	Uuid          int    `gorm:"primaryKey;column:uuid"`
 	ID            int    `json:"id" column:"id"`
 	Company       string `gorm:"column:company"`                   // 公司id
@@ -37,9 +37,7 @@ type Alibaba1 struct {
 	Job_type_name string ` gorm:"column:job_type_name"`            //工作种类
 	Job_detail    string ` gorm:"column:job_detail;type:longtext"` //工作职责
 	WorkLocation  Work   `gorm:"column:job_location"`
-	//Information BiliBili `gorm:"foreignKey:BiliBiliID_id"`
-	//BiliBiliID  string   `gorm:"column:id"` // 外键
-	Fetch_time string `gorm:"column:fetch_time"`
+	Fetch_time    string `gorm:"column:fetch_time"`
 }
 type Work []string
 
@@ -50,6 +48,6 @@ func (t *Work) Scan(value interface{}) error {
 func (t Work) Value() (driver.Value, error) {
 	return json.Marshal(t)
 }
-func (Alibaba1) TableName() string {
-	return "alibaba"
+func (Hello) TableName() string {
+	return "job"
 }

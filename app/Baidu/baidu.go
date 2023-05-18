@@ -6,6 +6,7 @@ import (
 	"github.com/gocolly/colly"
 	"strconv"
 	"time"
+	"xiangxiang/jackaroo/app/Alibaba"
 	"xiangxiang/jackaroo/global"
 )
 
@@ -13,19 +14,20 @@ var AllInformation []Baidu
 
 func Header(cookie string) {
 	Get_time := Get()
-	err1 := global.G_DB.AutoMigrate(&Baidu1{})
+	err1 := global.G_DB.AutoMigrate(&Alibaba.Hello{})
 	if err1 != nil {
 		fmt.Println("数据库迁移失败")
 	}
 	for i := 0; i < len(AllInformation); i++ {
-		information := &Baidu1{
-			ID:            AllInformation[i].Id,
+		str, _ := strconv.Atoi(AllInformation[i].Id)
+		information := &Alibaba.Hello{
+			ID:            str,
 			Company:       "百度",
 			Title:         AllInformation[i].Title,
 			Job_category:  AllInformation[i].Job_category,
 			Job_type_name: "校招",
 			Job_detail:    AllInformation[i].Job_Detail + AllInformation[i].Job_Obj,
-			WorkLocation:  AllInformation[i].WorkPlace,
+			WorkLocation:  Alibaba.Work{AllInformation[i].WorkPlace},
 			Fetch_time:    Get_time,
 		}
 		err1 := global.G_DB.Create(information).Error

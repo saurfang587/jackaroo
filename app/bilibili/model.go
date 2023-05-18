@@ -15,22 +15,6 @@ type BiliBili struct {
 	Job_detail    string `json:"positionDescription" gorm:"column:job_detail"` //工作职责
 	WorkLocation  string `json:"workLocation" gorm:"column:job_location"`      //工作地点
 }
-type BiliBili2 struct {
-	Uuid          int    `gorm:"primaryKey;column:uuid"`
-	ID            string `json:"id" column:"id"`
-	Company       string `gorm:"column:company"`                   // 公司id
-	Title         string ` gorm:"column:title"`                    //工作名字
-	Job_category  string `gorm:"column:job_category"`              //工作类型
-	Job_type_name string ` gorm:"column:job_type_name"`            //工作种类
-	Job_detail    string ` gorm:"column:job_detail;type:longtext"` //工作职责
-	WorkLocation  string `gorm:"column:job_location"`
-	//Information BiliBili `gorm:"foreignKey:BiliBiliID_id"`
-	//BiliBiliID  string   `gorm:"column:id"` // 外键
-	Fetch_time string `gorm:"column:fetch_time"`
-}
-type BiliBili1 struct {
-	Information []BiliBili
-}
 
 // ---------------------------
 // 存储id时候用到
@@ -44,13 +28,10 @@ type Context struct {
 
 // Kind 和 ListObj  两个结构体的作用就是将Data中的数据一层一层刨析开，得到我们想要的数据
 type Kind struct {
-	PageNum  int       `json:"pageNum"`
-	PageSize int       `json:"pageSize"`
-	List     []ListObj `json:"list"`
-	Pages    int       `json:"pages"`
-}
-type ListObj struct {
-	Id string `json:"id"`
+	PageNum  int        `json:"pageNum"`
+	PageSize int        `json:"pageSize"`
+	List     []BiliBili `json:"list"`
+	Pages    int        `json:"pages"`
 }
 
 // 获取token
@@ -58,9 +39,4 @@ type SCRFRep struct {
 	Code    int    `json:"code"`
 	Data    string `json:"data"`
 	Message string `json:"message"`
-}
-
-// 设置表名 为 bilibili
-func (BiliBili2) TableName() string {
-	return "bilibili"
 }

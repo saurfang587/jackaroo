@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"time"
+	"xiangxiang/jackaroo/app/Alibaba"
 	"xiangxiang/jackaroo/global"
 )
 
@@ -22,19 +23,19 @@ func Header(cookie string) {
 	for i, _ := range Allhref {
 		GetIndex(Allhref[i])
 	}
-	err1 := global.G_DB.AutoMigrate(&Weiruan1{})
+	err1 := global.G_DB.AutoMigrate(&Alibaba.Hello{})
 	if err1 != nil {
 		fmt.Println("数据库迁移失败")
 	}
 	for i := 0; i < len(Allhref); i++ {
-		information := &Weiruan1{
+		information := &Alibaba.Hello{
 			ID:            0,
 			Company:       "微软",
 			Title:         Title[i],
 			Job_category:  Job_category[i],
 			Job_type_name: "实习生",
 			Job_detail:    Job_detail[i],
-			WorkLocation:  WorkLocation[i],
+			WorkLocation:  WorkLocation,
 			Fetch_time:    time1,
 		}
 		err1 := global.G_DB.Create(information).Error
