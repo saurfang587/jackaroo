@@ -14,18 +14,14 @@ var Job_category []string
 var Job_detail []string
 var WorkLocation []string
 
-func Header(cookie string) {
+func Header(cookie string) (bool, error) {
 	time1 := time.Now().Format("2006-01-02 15:04:05")
-	Gethref()
-	if len(Allhref) == 0 {
-		fmt.Println("此时解析失败了，请你重新尝试吧")
+	pan, err := Gethref()
+	if pan == false {
+		return false, err
 	}
 	for i, _ := range Allhref {
 		GetIndex(Allhref[i])
-	}
-	err1 := global.G_DB.AutoMigrate(&Alibaba.Hello{})
-	if err1 != nil {
-		fmt.Println("数据库迁移失败")
 	}
 	for i := 0; i < len(Allhref); i++ {
 		information := &Alibaba.Hello{
@@ -41,11 +37,12 @@ func Header(cookie string) {
 		err1 := global.G_DB.Create(information).Error
 		if err1 != nil {
 			fmt.Println("插入数据失败了，请查看并修改错误")
-			return
+			return false, err1
 		}
 	}
+	return true, nil
 }
-func Gethref() {
+func Gethref() (bool, error) {
 	c := colly.NewCollector()
 	c.OnHTML("#jsApp > main > div:nth-child(2) > div > div > div.campus-company-main > div.jobs-wrap > div.left > div.tw-relative.dark\\:tw-bg-\\[\\#313540\\] > div.tw-h-full > div", func(div *colly.HTMLElement) {
 		div.ForEach("a.job-message-boxs", func(_ int, element *colly.HTMLElement) {
@@ -55,8 +52,9 @@ func Gethref() {
 	err := c.Visit("https://www.nowcoder.com/enterprise/146")
 	if err != nil {
 		fmt.Println("url请求失败")
-		return
+		return false, err
 	}
+	return true, nil
 }
 
 func GetIndex(url string) {

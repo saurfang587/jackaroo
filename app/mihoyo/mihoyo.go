@@ -13,13 +13,12 @@ import (
 var list []string
 var list2 []Data
 
-func Handler(cookie string) {
-	Get(cookie)
-	time1 := time.Now().Format("2006-01-02 15:04:05")
-	err1 := global.G_DB.AutoMigrate(&Alibaba.Hello{})
-	if err1 != nil {
-		fmt.Println("数据库迁移失败")
+func Header(cookie string) (bool, error) {
+	pan, err := Get(cookie)
+	if pan == false {
+		return false, err
 	}
+	time1 := time.Now().Format("2006-01-02 15:04:05")
 	for i := 0; i < len(list2); i++ {
 		information := &Alibaba.Hello{
 			ID:            list2[i].ObjectId,
@@ -34,12 +33,12 @@ func Handler(cookie string) {
 		err1 := global.G_DB.Create(information).Error
 		if err1 != nil {
 			fmt.Println("插入数据失败了，请查看并修改错误")
-			return
+			return false, err1
 		}
 	}
-
+	return true, nil
 }
-func Get(cookie string) {
+func Get(cookie string) (bool, error) {
 	rep := &IdResponse{}
 	i := 1
 
@@ -87,16 +86,20 @@ func Get(cookie string) {
 		err := c.PostRaw(url, b)
 		if err != nil {
 			fmt.Println("-=-=", err)
-			return
+			return false, err
 		}
 		i++
 		if len(rep.Data.List) < 1 {
 			break
 		}
 	}
-	Fetch(list)
+	pan, err := Fetch(list)
+	if pan == false {
+		return false, err
+	}
+	return true, nil
 }
-func Fetch(list []string) {
+func Fetch(list []string) (bool, error) {
 	c := colly.NewCollector()
 	c.OnRequest(func(r *colly.Request) {
 		r.Method = http.MethodPost
@@ -134,9 +137,9 @@ func Fetch(list []string) {
 		url := "https://ats.openout.mihoyo.com/ats-portal/v1/job/info"
 		err := c.PostRaw(url, b)
 		if err != nil {
-			return
+			return false, err
 		}
 		//url := "https://ats.openout.mihoyo.com/ats-portal/v1/job/info"
-
 	}
+	return true, nil
 }

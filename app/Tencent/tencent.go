@@ -15,14 +15,13 @@ var timestamp string
 var each *[]Each
 var AllInformation []Content3
 
-func Header(cookie string) {
+func Header(cookie string) (bool, error) {
 	time1 := time.Now().Format("2006-01-02 15:04:05")
-	each := Get()
-	Get1(each)
-	err1 := global.G_DB.AutoMigrate(&Alibaba.Hello{})
-	if err1 != nil {
-		fmt.Println("数据库迁移失败")
+	each, pan, err := Get()
+	if pan == false {
+		return false, err
 	}
+	Get1(each)
 	for i := 0; i < len(AllInformation); i++ {
 		information := &Alibaba.Hello{
 			ID:            AllInformation[i].Id,
@@ -37,13 +36,14 @@ func Header(cookie string) {
 		err1 := global.G_DB.Create(information).Error
 		if err1 != nil {
 			fmt.Println("插入数据失败了，请查看并修改错误")
-			return
+			return false, err1
 		}
 	}
+	return true, nil
 }
 
 // 获取所有页面的链接
-func Get() (AllTencent []Each) {
+func Get() (AllTencent []Each, b1 bool, err error) {
 	c := colly.NewCollector()
 	c.OnRequest(func(r *colly.Request) {
 		r.Method = "POST"
@@ -87,19 +87,19 @@ func Get() (AllTencent []Each) {
 		}
 		jsonBody, err := json.Marshal(requestBody)
 		if err != nil {
-			panic(err)
+			return nil, false, err
 		}
 		timestamp = strconv.FormatInt(time.Now().UnixNano()/int64(time.Millisecond), 10)
-		err = c.PostRaw("https://join.qq.com/api/v1/position/searchPosition?"+timestamp, jsonBody)
-		if err != nil {
+		err1 := c.PostRaw("https://join.qq.com/api/v1/position/searchPosition?"+timestamp, jsonBody)
+		if err1 != nil {
 			fmt.Println("访问链接地址出错了")
+			return nil, false, err1
 		}
 		i++
 		if len(test.Data.PositionList) < 1 {
-			break
+			return AllTencent, true, nil
 		}
 	}
-	return
 }
 
 func Get1(each []Each) {

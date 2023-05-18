@@ -4,28 +4,17 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="合并wen的代码">
-      <change afterPath="$PROJECT_DIR$/app/jingdong/jingdong.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/jingdong/model.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/mihoyo/mihoyo.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/mihoyo/model.go" afterDir="false" />
+    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="公司数据库建表">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Alibaba/alibaba.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Alibaba/alibaba.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Alibaba/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Alibaba/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Baidu/baidu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Baidu/baidu.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Baidu/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Baidu/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Meituan/Meituan.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Meituan/Meituan.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Meituan/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Meituan/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Tencent/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Tencent/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Tencent/tencent.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Tencent/tencent.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Wangyi/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Wangyi/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Wangyi/wangyi.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Wangyi/wangyi.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Weiruan/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Weiruan/model.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Weiruan/weiruan.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Weiruan/weiruan.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/bilibili/bilibili.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/bilibili/bilibili.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bilibili/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/bilibili/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/xiaohongshu/model.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/xiaohongshu/xiaohongshu.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/jingdong/jingdong.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/jingdong/jingdong.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/mihoyo/mihoyo.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/mihoyo/mihoyo.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <list id="2144b9f8-6ce9-4ee2-b3e5-453731f2f4f0" name="wen更改" comment="" />
@@ -107,6 +96,15 @@
       <filePath value="$PROJECT_DIR$/app/Meituan/Meituan.go" />
       <method v="2" />
     </configuration>
+    <configuration name="go build alibaba.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="jackaroo" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <package value="Sprider" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/Alibaba/alibaba.go" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build bilibili.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="jackaroo" />
       <working_directory value="$PROJECT_DIR$" />
@@ -114,15 +112,6 @@
       <package value="Sprider" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/app/bilibili/bilibili.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build jingdong.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="jackaroo" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <package value="Sprider" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/jingdong/jingdong.go" />
       <method v="2" />
     </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -156,10 +145,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Go 构建.go build main.go" />
+        <item itemvalue="Go 构建.go build alibaba.go" />
         <item itemvalue="Go 构建.go build mihoyo.go" />
         <item itemvalue="Go 构建.go build Meituan.go" />
         <item itemvalue="Go 构建.go build bilibili.go" />
-        <item itemvalue="Go 构建.go build jingdong.go" />
       </list>
     </recent_temporary>
   </component>
@@ -183,7 +172,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/dev_20230510_wen" />
+                        <option value="origin/dev_20230508_wei" />
                       </list>
                     </value>
                   </entry>
@@ -197,7 +186,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="bilibili信息爬取" />
-    <option name="LAST_COMMIT_MESSAGE" value="bilibili信息爬取" />
+    <MESSAGE value="公司数据库建表" />
+    <option name="LAST_COMMIT_MESSAGE" value="公司数据库建表" />
   </component>
   <component name="VgoProject">
     <environment>

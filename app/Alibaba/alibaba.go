@@ -6,7 +6,6 @@ import (
 	"github.com/gocolly/colly"
 	_ "github.com/json-iterator/go"
 	"gopkg.in/headzoo/surf.v1"
-	"log"
 	"strconv"
 	"time"
 	"xiangxiang/jackaroo/global"
@@ -15,24 +14,22 @@ import (
 var Allali []Alibaba
 
 // 阿里实习生
-func Header(cookie string) {
+func Header(cookie string) (bool, error) {
 	// 创建一个新的浏览器对象
 	browser := surf.NewBrowser()
 	// 打开目标页面
 	err := browser.Open("https://talent.alibaba.com/campus/position-list?campusType=internship&lang=zh")
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 	// 获取 Cookie
 	cookies := browser.SiteCookies()
 	cookie1 := cookies[0].String()[11:]
-	Get(cookie1)
+	pan, err2 := Get(cookie1)
 	time1 := time.Now().Format("2006-01-02 15:04:05")
-	Get1(cookie1)
-	fmt.Println(cookie1)
-	err1 := global.G_DB.AutoMigrate(&Hello{})
-	if err1 != nil {
-		fmt.Println("数据库迁移失败")
+	pan1 := Get1(cookie1)
+	if pan == false || pan1 == false {
+		return false, err2
 	}
 	for i := 0; i < len(Allali); i++ {
 		information := &Hello{
@@ -48,13 +45,14 @@ func Header(cookie string) {
 		err1 := global.G_DB.Create(information).Error
 		if err1 != nil {
 			fmt.Println("插入数据失败了，请查看并修改错误")
-			return
+			return false, err1
 		}
 	}
+	return true, nil
 }
 
 // 获取实习生
-func Get(cookie1 string) {
+func Get(cookie1 string) (bool, error) {
 	c := colly.NewCollector()
 	c.OnRequest(func(req *colly.Request) {
 		req.Headers.Set("authority", "talent.alibaba.com")
@@ -105,17 +103,17 @@ func Get(cookie1 string) {
 		err := c.PostRaw("https://talent.alibaba.com/position/search?_csrf="+cookie1, Data)
 		if err != nil {
 			fmt.Printf("抓取第: %d出错", i)
-			return
+			return false, err
 		}
 		i++
 		if len(test.Data.Data1) < 1 {
-			return
+			return true, nil
 		}
 	}
 }
 
 // 项目制实习生
-func Get1(cookie string) {
+func Get1(cookie string) bool {
 	c := colly.NewCollector()
 	c.OnRequest(func(req *colly.Request) {
 		req.Headers.Set("authority", "talent.alibaba.com")
@@ -166,11 +164,11 @@ func Get1(cookie string) {
 		err := c.PostRaw("https://talent.alibaba.com/position/search?_csrf="+cookie, Data)
 		if err != nil {
 			fmt.Printf("抓取第: %d出错", i)
-			return
+			return false
 		}
 		i++
 		if len(test.Data.Data1) < 1 {
-			return
+			return true
 		}
 	}
 }

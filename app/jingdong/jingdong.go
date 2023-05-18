@@ -10,16 +10,12 @@ import (
 	"xiangxiang/jackaroo/global"
 )
 
-func Handler(cookie string) {
-	list1 := Get(cookie)
-	if list1 == nil {
-		fmt.Println("Get函数返回错误，请重新查看所有return")
+func Header(cookie string) (bool, error) {
+	list1, pan, err := Get(cookie)
+	if pan == false {
+		return false, err
 	}
 	time1 := time.Now().Format("2006-01-02 15:04:05")
-	err1 := global.G_DB.AutoMigrate(&Alibaba.Hello{})
-	if err1 != nil {
-		fmt.Println("数据库迁移失败")
-	}
 	for i := 0; i < len(list1); i++ {
 		worklocation := removeDuplicates(list1[i].WorkCity)
 		information := &Alibaba.Hello{
@@ -35,16 +31,15 @@ func Handler(cookie string) {
 		err1 := global.G_DB.Create(information).Error
 		if err1 != nil {
 			fmt.Println("插入数据失败了，请查看并修改错误")
-			return
+			return false, err
 		}
 	}
-
+	return true, nil
 }
-func Get(cookie string) []List {
+func Get(cookie string) ([]List, bool, error) {
 	list := []List{}
 	rep := &Rep{}
 	i := 0
-
 	if cookie == "" {
 		cookie = ""
 	}
@@ -93,14 +88,14 @@ func Get(cookie string) []List {
 		err := c.PostRaw(url, b)
 		if err != nil {
 			fmt.Println("-=-=", err)
-			return nil
+			return nil, false, err
 		}
 		i++
 		if len(rep.Data.List) < 1 {
 			break
 		}
 	}
-	return list
+	return list, true, nil
 }
 
 // 去除重复元素
