@@ -3,6 +3,7 @@ package inital
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"xiangxiang/jackaroo/global"
 )
 
@@ -44,6 +45,9 @@ func GormMysql() *gorm.DB {
 }
 
 func gormConfig() *gorm.Config {
-	config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
+	config := &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+		Logger:                                   logger.Default.LogMode(logger.Silent),
+	}
 	return config
 }

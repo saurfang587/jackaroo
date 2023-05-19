@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocolly/colly"
+	"gorm.io/gorm"
 	"strconv"
 	"time"
 	"xiangxiang/jackaroo/app/Alibaba"
@@ -33,9 +34,19 @@ func Header(cookie string) (bool, error) {
 			WorkLocation:  AllInformation[i].WorkPlace,
 			Fetch_time:    time1,
 		}
-		err1 := global.G_DB.Create(information).Error
+		time1 := time.Now().Format("2006-01-02 15:04:05")
+		//首先查询是否存在 不存在就创建，存在的话就更新时间  对于时间超过1小时未做任何更改的数据，进行删除
+		err3 := global.G_DB.Where("title=?", information.Title).First(&Alibaba.Hello{}).Error
+		if err3 == gorm.ErrRecordNotFound {
+			err1 := global.G_DB.Create(information).Error
+			if err1 != nil {
+				fmt.Println("插入数据失败了，请查看并修改错误")
+				return false, err1
+			}
+		}
+		err1 := global.G_DB.Where("title=?", information.Title).First(&Alibaba.Hello{}).Set("fetch_time", time1).Error
 		if err1 != nil {
-			fmt.Println("插入数据失败了，请查看并修改错误")
+			fmt.Println("更新数据库中表的时间出错")
 			return false, err1
 		}
 	}

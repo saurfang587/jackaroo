@@ -6,6 +6,7 @@ import (
 	"github.com/gocolly/colly"
 	_ "github.com/json-iterator/go"
 	"gopkg.in/headzoo/surf.v1"
+	"gorm.io/gorm"
 	"strconv"
 	"time"
 	"xiangxiang/jackaroo/global"
@@ -42,9 +43,18 @@ func Header(cookie string) (bool, error) {
 			WorkLocation:  Allali[i].WorkLocation,
 			Fetch_time:    time1,
 		}
-		err1 := global.G_DB.Create(information).Error
+		//首先查询是否存在 不存在就创建，存在的话就更新时间  对于时间超过1小时未做任何更改的数据，进行删除
+		err3 := global.G_DB.Where("title=?", information.Title).First(&Hello{}).Error
+		if err3 == gorm.ErrRecordNotFound {
+			err1 := global.G_DB.Create(information).Error
+			if err1 != nil {
+				fmt.Println("插入数据失败了，请查看并修改错误")
+				return false, err1
+			}
+		}
+		err1 := global.G_DB.Where("title=?", information.Title).First(&Hello{}).Set("fetch_time", time1).Error
 		if err1 != nil {
-			fmt.Println("插入数据失败了，请查看并修改错误")
+			fmt.Println("更新数据库中表的时间出错")
 			return false, err1
 		}
 	}
@@ -170,5 +180,13 @@ func Get1(cookie string) bool {
 		if len(test.Data.Data1) < 1 {
 			return true
 		}
+	}
+}
+func DeleteStaleRecords(db *gorm.DB) {
+	cutoff := time.Now().Add(-1 * time.Hour)
+	var information []Hello
+	db.Where("fetch_time < ?", cutoff).Find(&information)
+	for _, user := range information {
+		db.Delete(&user)
 	}
 }
