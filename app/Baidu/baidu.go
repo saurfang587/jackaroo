@@ -4,52 +4,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocolly/colly"
-	"gorm.io/gorm"
 	"strconv"
-	"time"
-	"xiangxiang/jackaroo/app/Alibaba"
-	"xiangxiang/jackaroo/global"
 )
 
 var AllInformation []Baidu
 
 func Header(cookie string) (bool, error) {
-	Get_time, pan, err := Get()
+	pan, err := Get()
 	if pan == false {
 		return false, err
 	}
-	for i := 0; i < len(AllInformation); i++ {
-		str, _ := strconv.Atoi(AllInformation[i].Id)
-		information := &Alibaba.Hello{
-			ID:            str,
-			Company:       "百度",
-			Title:         AllInformation[i].Title,
-			Job_category:  AllInformation[i].Job_category,
-			Job_type_name: "校招",
-			Job_detail:    AllInformation[i].Job_Detail + AllInformation[i].Job_Obj,
-			WorkLocation:  Alibaba.Work{AllInformation[i].WorkPlace},
-			Fetch_time:    Get_time,
-		}
-		time1 := time.Now().Format("2006-01-02 15:04:05")
-		//首先查询是否存在 不存在就创建，存在的话就更新时间  对于时间超过1小时未做任何更改的数据，进行删除
-		err3 := global.G_DB.Where("title=?", information.Title).First(&Alibaba.Hello{}).Error
-		if err3 == gorm.ErrRecordNotFound {
-			err1 := global.G_DB.Create(information).Error
-			if err1 != nil {
-				fmt.Println("插入数据失败了，请查看并修改错误")
-				return false, err1
-			}
-		}
-		err1 := global.G_DB.Where("title=?", information.Title).First(&Alibaba.Hello{}).Set("fetch_time", time1).Error
-		if err1 != nil {
-			fmt.Println("更新数据库中表的时间出错")
-			return false, err1
-		}
+	pan1, err1 := Baidu_orm()
+	if pan1 == false {
+		return false, err1
 	}
 	return true, nil
 }
-func Get() (string, bool, error) {
-	time1 := time.Now().Format("2006-01-02 15:04:05")
+func Get() (bool, error) {
 	//创建请求
 	c := colly.NewCollector(
 		colly.AllowURLRevisit(),
@@ -105,9 +76,9 @@ func Get() (string, bool, error) {
 	}
 	pan, err := Fetch1()
 	if pan == false {
-		return "", false, err
+		return false, err
 	}
-	return time1, true, nil
+	return true, nil
 }
 
 // 实习生招聘

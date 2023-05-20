@@ -15,6 +15,7 @@ type Baidu struct {
 	Job_Obj      string `json:"serviceCondition"` //工作要求
 	Job_Detail   string `json:"workContent"`      //工作内容
 	WorkPlace    string `json:"workPlace"`        //工作地点
+	PushTime     string `json:"updateDate"`
 }
 
 // -------------------------------

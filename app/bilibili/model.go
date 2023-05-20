@@ -14,6 +14,7 @@ type BiliBili struct {
 	Job_type_name string `json:"positionTypeName" gorm:"column:job_type_name"` //工作种类
 	Job_detail    string `json:"positionDescription" gorm:"column:job_detail"` //工作职责
 	WorkLocation  string `json:"workLocation" gorm:"column:job_location"`      //工作地点
+	PushTime      string `json:"pushTime"`
 }
 
 // ---------------------------

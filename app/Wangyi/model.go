@@ -15,4 +15,5 @@ type Wangyi struct {
 	Job_category      string   `json:"reqEducationName"` //
 	FirstPostTypeName string   `json:"firstPostTypeName"`
 	WorkPlaceNameList []string `json:"workPlaceNameList"`
+	PushTime          int      `json:"updateTime"`
 }

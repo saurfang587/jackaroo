@@ -13,6 +13,7 @@ type Meituan struct {
 	Job_Obj      string `json:"highLight"`  //工作要求
 	Job_Detail   string `json:"jobDuty"`    //工作内容 需要合并到上条中
 	WorkPlace    []Work `json:"cityList"`   //工作地点
+	PushTime     int    `json:"refreshTime"`
 }
 
 type Work struct {

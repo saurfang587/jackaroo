@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"sync"
 	"time"
+	_60 "xiangxiang/jackaroo/app/360"
 	"xiangxiang/jackaroo/app/Alibaba"
 	"xiangxiang/jackaroo/app/Baidu"
 	"xiangxiang/jackaroo/app/Meituan"
@@ -12,9 +13,12 @@ import (
 	"xiangxiang/jackaroo/app/Wangyi"
 	"xiangxiang/jackaroo/app/Weiruan"
 	Bilibili "xiangxiang/jackaroo/app/bilibili"
+	"xiangxiang/jackaroo/app/huawei"
 	"xiangxiang/jackaroo/app/jingdong"
-	"xiangxiang/jackaroo/app/mihoyo"
-	"xiangxiang/jackaroo/global"
+	"xiangxiang/jackaroo/app/lilisi"
+	"xiangxiang/jackaroo/app/xiaohongshu"
+	"xiangxiang/jackaroo/app/xiaomi"
+	"xiangxiang/jackaroo/app/zijie"
 )
 
 func Router() {
@@ -27,13 +31,78 @@ func Router() {
 		fmt.Println("引擎启动失败", err1)
 	}
 	//定时删除未更新的数据：即招聘公司已经撤销的招聘信息
-	Alibaba.DeleteStaleRecords(global.G_DB)
+	//global.DeleteStaleRecords(global.G_DB)
 }
 
 // 并发爬取信息
 func Hello() {
 	var wg sync.WaitGroup
-	wg.Add(9)
+	wg.Add(14)
+	go func() {
+		defer wg.Done()
+		for {
+			if pan, err := zijie.Header(""); pan != false {
+				fmt.Println("zijie爬完了")
+				break
+			} else {
+				fmt.Println("zijie重试", err)
+				time.Sleep(3 * time.Second)
+			}
+
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		for {
+			if pan, err := xiaomi.Header(""); pan != false {
+				fmt.Println("xiaomi爬完了")
+				break
+			} else {
+				fmt.Println("xiaomi重试", err)
+				time.Sleep(3 * time.Second)
+			}
+
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		for {
+			if pan, err := xiaohongshu.Header(""); pan != false {
+				fmt.Println("xiaohongshu爬完了")
+				break
+			} else {
+				fmt.Println("xiaohongshu重试", err)
+				time.Sleep(3 * time.Second)
+			}
+
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		for {
+			if pan, err := lilisi.Header(""); pan != false {
+				fmt.Println("lilisi爬完了")
+				break
+			} else {
+				fmt.Println("lilisi重试", err)
+				time.Sleep(3 * time.Second)
+			}
+
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		for {
+			if pan, err := huawei.Header(""); pan != false {
+				fmt.Println("huawei爬完了")
+				break
+			} else {
+				fmt.Println("huawei重试", err)
+				time.Sleep(3 * time.Second)
+			}
+
+		}
+	}()
 	go func() {
 		defer wg.Done()
 		for {
@@ -98,18 +167,18 @@ func Hello() {
 
 		}
 	}()
-	go func() {
-		defer wg.Done()
-		for {
-			if pan, err := mihoyo.Header(""); pan != false {
-				fmt.Println("米哈游爬完了")
-				break
-			} else {
-				fmt.Println("米哈游重试", err)
-				time.Sleep(3 * time.Second)
-			}
-		}
-	}()
+	//go func() {
+	//	defer wg.Done()
+	//	for {
+	//		if pan, err := mihoyo.Header(""); pan != false {
+	//			fmt.Println("米哈游爬完了")
+	//			break
+	//		} else {
+	//			fmt.Println("米哈游重试", err)
+	//			time.Sleep(3 * time.Second)
+	//		}
+	//	}
+	//}()
 	go func() {
 		defer wg.Done()
 		for {
@@ -143,6 +212,18 @@ func Hello() {
 				break
 			} else {
 				fmt.Println("微软重试", err)
+				time.Sleep(3 * time.Second)
+			}
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		for {
+			if pan, err := _60.Header(""); pan != false {
+				fmt.Println("360爬完了")
+				break
+			} else {
+				fmt.Println("360重试", err)
 				time.Sleep(3 * time.Second)
 			}
 		}

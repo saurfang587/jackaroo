@@ -6,10 +6,7 @@ import (
 	"github.com/gocolly/colly"
 	_ "github.com/json-iterator/go"
 	"gopkg.in/headzoo/surf.v1"
-	"gorm.io/gorm"
 	"strconv"
-	"time"
-	"xiangxiang/jackaroo/global"
 )
 
 var Allali []Alibaba
@@ -27,36 +24,13 @@ func Header(cookie string) (bool, error) {
 	cookies := browser.SiteCookies()
 	cookie1 := cookies[0].String()[11:]
 	pan, err2 := Get(cookie1)
-	time1 := time.Now().Format("2006-01-02 15:04:05")
 	pan1 := Get1(cookie1)
 	if pan == false || pan1 == false {
 		return false, err2
 	}
-	for i := 0; i < len(Allali); i++ {
-		information := &Hello{
-			ID:            Allali[i].Id,
-			Company:       "阿里巴巴",
-			Title:         Allali[i].Title,
-			Job_category:  Allali[i].Job_category,
-			Job_type_name: Allali[i].Job_type_name,
-			Job_detail:    Allali[i].Job_Detail + Allali[i].Job_Obj,
-			WorkLocation:  Allali[i].WorkLocation,
-			Fetch_time:    time1,
-		}
-		//首先查询是否存在 不存在就创建，存在的话就更新时间  对于时间超过1小时未做任何更改的数据，进行删除
-		err3 := global.G_DB.Where("title=?", information.Title).First(&Hello{}).Error
-		if err3 == gorm.ErrRecordNotFound {
-			err1 := global.G_DB.Create(information).Error
-			if err1 != nil {
-				fmt.Println("插入数据失败了，请查看并修改错误")
-				return false, err1
-			}
-		}
-		err1 := global.G_DB.Where("title=?", information.Title).First(&Hello{}).Set("fetch_time", time1).Error
-		if err1 != nil {
-			fmt.Println("更新数据库中表的时间出错")
-			return false, err1
-		}
+	pan2, err3 := Alibaba_orm()
+	if pan2 == false {
+		return false, err3
 	}
 	return true, nil
 }
@@ -180,13 +154,5 @@ func Get1(cookie string) bool {
 		if len(test.Data.Data1) < 1 {
 			return true
 		}
-	}
-}
-func DeleteStaleRecords(db *gorm.DB) {
-	cutoff := time.Now().Add(-12 * time.Hour)
-	var information []Hello
-	db.Where("fetch_time > ?", cutoff).Find(&information)
-	for _, user := range information {
-		db.Delete(&user)
 	}
 }
