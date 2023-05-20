@@ -183,9 +183,9 @@ func Get1(cookie string) bool {
 	}
 }
 func DeleteStaleRecords(db *gorm.DB) {
-	cutoff := time.Now().Add(-1 * time.Hour)
+	cutoff := time.Now().Add(-12 * time.Hour)
 	var information []Hello
-	db.Where("fetch_time < ?", cutoff).Find(&information)
+	db.Where("fetch_time > ?", cutoff).Find(&information)
 	for _, user := range information {
 		db.Delete(&user)
 	}

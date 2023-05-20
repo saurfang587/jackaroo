@@ -5,11 +5,13 @@ import (
 	"xiangxiang/jackaroo/app/Alibaba"
 	"xiangxiang/jackaroo/global"
 	"xiangxiang/jackaroo/inital"
-	"xiangxiang/jackaroo/router"
+	"xiangxiang/jackaroo/timer"
 )
 
 func main() {
+	//初始化相关配置 数据库和日志
 	Init()
+	//关闭数据库
 	defer func() {
 		db, _ := global.G_DB.DB()
 		err := db.Close()
@@ -18,7 +20,10 @@ func main() {
 			return
 		}
 	}()
-	router.Router()
+	//关闭定时器
+	defer timer.Close()
+	//开启定时器
+	timer.Timer()
 }
 
 // 配置初始化
