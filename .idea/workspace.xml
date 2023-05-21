@@ -7,12 +7,6 @@
     <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.prod.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/global/global.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/global.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inital/viper.go" beforeDir="false" afterPath="$PROJECT_DIR$/inital/viper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qqq" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/router.go" afterDir="false" />
     </list>
     <list id="2144b9f8-6ce9-4ee2-b3e5-453731f2f4f0" name="wen更改" comment="" />
     <list id="28415d43-032e-4db0-afe5-555bc52775a2" name="添加数据库" comment="" />
@@ -35,6 +29,11 @@
   </component>
   <component name="GOROOT" url="file://$PROJECT_DIR$/../../go" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
