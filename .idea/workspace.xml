@@ -4,36 +4,15 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="更新：定时器1">
-      <change afterPath="$PROJECT_DIR$/app/360/360.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/360/model.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/360/orm.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/bilibili/orm.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/huawei/huawei.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/huawei/model.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/huawei/orm.go" afterDir="false" />
+    <list default="true" id="ea81dccf-4421-47c8-a6e2-4cde60c2dd3c" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Alibaba/alibaba.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Alibaba/alibaba.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Alibaba/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Alibaba/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Baidu/baidu.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Baidu/baidu.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Baidu/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Baidu/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Meituan/Meituan.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Meituan/Meituan.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Meituan/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Meituan/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Tencent/tencent.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Tencent/tencent.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Wangyi/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Wangyi/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Wangyi/wangyi.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Wangyi/wangyi.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Weiruan/weiruan.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/Weiruan/weiruan.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bilibili/bilibili.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/bilibili/bilibili.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bilibili/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/bilibili/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/jingdong/jingdong.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/jingdong/jingdong.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/jingdong/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/jingdong/model.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/mihoyo/mihoyo.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/mihoyo/mihoyo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/mihoyo/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/mihoyo/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.prod.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/global/global.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/global.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/global/hanshu.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inital/viper.go" beforeDir="false" afterPath="$PROJECT_DIR$/inital/viper.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qqq" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timer/timer.go" beforeDir="false" afterPath="$PROJECT_DIR$/timer/timer.go" afterDir="false" />
     </list>
     <list id="2144b9f8-6ce9-4ee2-b3e5-453731f2f4f0" name="wen更改" comment="" />
     <list id="28415d43-032e-4db0-afe5-555bc52775a2" name="添加数据库" comment="" />
@@ -66,34 +45,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "TODO_SCOPE": "所有位置",
-    "WebServerToolWindowFactoryState": "false",
-    "configurable..is.expanded": "false",
-    "configurable.GoLibrariesConfigurable.is.expanded": "true",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "D:/GoProduct/jackaroo/app",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "settings.editor.selected.configurable": "go.vgo"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;所有位置&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;configurable..is.expanded&quot;: &quot;false&quot;,
+    &quot;configurable.GoLibrariesConfigurable.is.expanded&quot;: &quot;true&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/GoProduct/jackaroo/app&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\GoProduct\jackaroo\app" />
       <recent name="D:\GoProduct\jackaroo\jackaroo\app\bilibili" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GoProduct\jackaroo\config" />
     </key>
   </component>
   <component name="RunManager" selected="Go 构建.go build main.go">
@@ -210,7 +192,8 @@
     <MESSAGE value="更新：接口实现" />
     <MESSAGE value="更新：定时器" />
     <MESSAGE value="更新：定时器1" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新：定时器1" />
+    <MESSAGE value="更新：定时器实现爬取各公司" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新：定时器实现爬取各公司" />
   </component>
   <component name="VgoProject">
     <environment>

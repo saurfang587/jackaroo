@@ -19,6 +19,7 @@ import (
 	"xiangxiang/jackaroo/app/xiaohongshu"
 	"xiangxiang/jackaroo/app/xiaomi"
 	"xiangxiang/jackaroo/app/zijie"
+	"xiangxiang/jackaroo/global"
 )
 
 func Router() {
@@ -31,7 +32,7 @@ func Router() {
 		fmt.Println("引擎启动失败", err1)
 	}
 	//定时删除未更新的数据：即招聘公司已经撤销的招聘信息
-	//global.DeleteStaleRecords(global.G_DB)
+	global.DeleteStaleRecords(global.G_DB)
 }
 
 // 并发爬取信息
@@ -167,6 +168,7 @@ func Hello() {
 
 		}
 	}()
+	//公司网络屏蔽了米哈游 所以需要换网络才可以进去并爬到
 	//go func() {
 	//	defer wg.Done()
 	//	for {

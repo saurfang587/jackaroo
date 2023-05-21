@@ -21,9 +21,6 @@ func main() {
 	defer timer.Close()
 	//开启定时器
 	timer.Timer()
-	//pan, err := lilisi.Header("")
-	//fmt.Println(pan)
-	//fmt.Println(err)
 }
 
 // 配置初始化
