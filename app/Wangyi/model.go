@@ -10,10 +10,10 @@ type Content1 struct {
 type Wangyi struct {
 	Id                int      `json:"id"`
 	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Requirement       string   `json:"requirement"`
-	ReqEducationName  string   `json:"reqEducationName"` // 学历
+	Job_detail        string   `json:"description"`
+	Job_Obisity       string   `json:"requirement"`
+	Job_category      string   `json:"reqEducationName"` //
 	FirstPostTypeName string   `json:"firstPostTypeName"`
-	UpdateTime        int      `json:"updateTime"`
 	WorkPlaceNameList []string `json:"workPlaceNameList"`
+	PushTime          int      `json:"updateTime"`
 }

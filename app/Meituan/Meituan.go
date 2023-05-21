@@ -4,15 +4,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocolly/colly"
+	"time"
 )
 
 var AllMeituan []Meituan
 
-func Header(cookie string) {
-	Get()
-	fmt.Println(AllMeituan)
+func Header(cookie string) (bool, error) {
+	pan, err := Get()
+	if pan == false {
+		return false, err
+	}
+	pan1, err1 := Meituan_orm()
+	if pan1 == false {
+		return false, err1
+	}
+	return true, nil
 }
-func Get() {
+func Get() (bool, error) {
 	c := colly.NewCollector()
 	// 在请求前设置Header字段
 	c.OnRequest(func(r *colly.Request) {
@@ -31,18 +39,26 @@ func Get() {
 		r.Headers.Set("sec-ch-ua-mobile", "?0")
 		r.Headers.Set("sec-ch-ua-platform", "\"Windows\"")
 	})
+	err := c.Limit(&colly.LimitRule{
+		DomainGlob:  "*",
+		Parallelism: 4,
+		Delay:       time.Second * 1,
+		RandomDelay: time.Millisecond * 500,
+	})
+	if err != nil {
+		return false, err
+	}
 	test := Content{}
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, &test)
 		if err != nil {
-			fmt.Println("json数据解析失败")
+			fmt.Println("json数据解析失败", err)
 		}
 		if len(test.Data.List) < 1 {
 			return
 		}
 		AllMeituan = append(AllMeituan, test.Data.List...)
 	})
-
 	i := 1
 	for {
 		data := map[string]interface{}{
@@ -68,20 +84,19 @@ func Get() {
 			"u_query_id": "",
 			"r_query_id": "",
 		}
-		Data, err := json.Marshal(data)
-		if err != nil {
+		Data, err2 := json.Marshal(data)
+		if err2 != nil {
 			fmt.Println("将json解压为byte数组出错")
-			return
+			return false, err2
 		}
 		err1 := c.PostRaw("https://zhaopin.meituan.com/api/official/job/getJobList", Data)
 		if err1 != nil {
 			fmt.Println("解析url请求地址出错，请你继续尝试", err1)
-			return
+			return false, err1
 		}
 		i++
 		if len(test.Data.List) < 1 {
-			return
+			return true, nil
 		}
 	}
-
 }

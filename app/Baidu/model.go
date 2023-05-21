@@ -11,12 +11,11 @@ type Kind struct {
 type Baidu struct {
 	Id           string `json:"jobId"`            //工作id
 	Title        string `json:"name"`             //工作名字
-	Posttype     string `json:"postType"`         //类型
-	Job_category string `json:"projectType"`      //技术类型
-	Push_time    string `json:"publishDate"`      //发布时间
+	Job_category string `json:"postType"`         //技术类型
 	Job_Obj      string `json:"serviceCondition"` //工作要求
 	Job_Detail   string `json:"workContent"`      //工作内容
 	WorkPlace    string `json:"workPlace"`        //工作地点
+	PushTime     string `json:"updateDate"`
 }
 
 // -------------------------------

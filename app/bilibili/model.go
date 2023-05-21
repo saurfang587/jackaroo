@@ -8,15 +8,13 @@ type Context1 struct {
 	Message string   `json:"message"`
 }
 type BiliBili struct {
-	id                  int    `gorm:"primaryKey";column:"ID"`
-	PositionName        string `json:"positionName" gorm:"column:positionName"`               //工作名字
-	PositionTypeName    string `json:"positionTypeName" gorm:"column:positionTypeName"`       //工作类型
-	PostCodeName        string `json:"postCodeName" gorm:"column:postCodeName"`               //工作种类
-	PositionDescription string `json:"positionDescription" gorm:"column:positionDescription"` //工作职责
-	WorkLocation        string `json:"workLocation" gorm:"column:workLocation"`               //工作地点
-	PushTime            string `json:"pushTime" gorm:"column:pushTime"`                       //发布时间
-	WebApplyEndTime     string `json:"webApplyEndTime" gorm:"column:webApplyEndTime"`         //网申结束时间
-	WebApplyStartTime   string `json:"webApplyStartTime" gorm:"column:webApplyStartTime"`     //网申开始时间
+	ID            string `json:"id" column:"id"`                               // 公司id
+	Title         string `json:"positionName" gorm:"column:title"`             //工作名字
+	Job_category  string `json:"postCodeName" gorm:"column:job_category"`      //工作类型
+	Job_type_name string `json:"positionTypeName" gorm:"column:job_type_name"` //工作种类
+	Job_detail    string `json:"positionDescription" gorm:"column:job_detail"` //工作职责
+	WorkLocation  string `json:"workLocation" gorm:"column:job_location"`      //工作地点
+	PushTime      string `json:"pushTime"`
 }
 
 // ---------------------------
@@ -31,13 +29,10 @@ type Context struct {
 
 // Kind 和 ListObj  两个结构体的作用就是将Data中的数据一层一层刨析开，得到我们想要的数据
 type Kind struct {
-	PageNum  int       `json:"pageNum"`
-	PageSize int       `json:"pageSize"`
-	List     []ListObj `json:"list"`
-	Pages    int       `json:"pages"`
-}
-type ListObj struct {
-	Id string `json:"id"`
+	PageNum  int        `json:"pageNum"`
+	PageSize int        `json:"pageSize"`
+	List     []BiliBili `json:"list"`
+	Pages    int        `json:"pages"`
 }
 
 // 获取token

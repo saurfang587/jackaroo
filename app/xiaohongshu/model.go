@@ -20,6 +20,7 @@ type Rep struct {
 	Success    bool        `json:"success"`
 	TraceLogID string      `json:"traceLogId"`
 }
+
 type List struct {
 	AmountInNeed  string      `json:"amountInNeed"`  //岗位需求
 	Duty          string      `json:"duty"`          //岗位职责

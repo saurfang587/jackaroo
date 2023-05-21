@@ -6,30 +6,37 @@ import (
 	"github.com/gocolly/colly"
 	_ "github.com/json-iterator/go"
 	"gopkg.in/headzoo/surf.v1"
-	"log"
 	"strconv"
 )
 
-var Allali []Context1
+var Allali []Alibaba
 
 // 阿里实习生
-func Header(cookie string) {
+func Header(cookie string) (bool, error) {
 	// 创建一个新的浏览器对象
 	browser := surf.NewBrowser()
 	// 打开目标页面
 	err := browser.Open("https://talent.alibaba.com/campus/position-list?campusType=internship&lang=zh")
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 	// 获取 Cookie
 	cookies := browser.SiteCookies()
 	cookie1 := cookies[0].String()[11:]
-	fmt.Println(cookie1)
-	//Get(cookie1)
-	Get1(cookie1)
-	fmt.Println(Allali)
+	pan, err2 := Get(cookie1)
+	pan1 := Get1(cookie1)
+	if pan == false || pan1 == false {
+		return false, err2
+	}
+	pan2, err3 := Alibaba_orm()
+	if pan2 == false {
+		return false, err3
+	}
+	return true, nil
 }
-func Get(cookie1 string) {
+
+// 获取实习生
+func Get(cookie1 string) (bool, error) {
 	c := colly.NewCollector()
 	c.OnRequest(func(req *colly.Request) {
 		req.Headers.Set("authority", "talent.alibaba.com")
@@ -52,13 +59,13 @@ func Get(cookie1 string) {
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, &test)
 		if err != nil {
-			fmt.Println("json解析错误")
+			fmt.Println("json解析错误", err)
 			return
 		}
 		if len(test.Data.Data1) < 1 {
 			return
 		}
-		Allali = append(Allali, test)
+		Allali = append(Allali, test.Data.Data1...)
 	})
 	i := 1
 	for {
@@ -80,17 +87,17 @@ func Get(cookie1 string) {
 		err := c.PostRaw("https://talent.alibaba.com/position/search?_csrf="+cookie1, Data)
 		if err != nil {
 			fmt.Printf("抓取第: %d出错", i)
-			return
+			return false, err
 		}
 		i++
 		if len(test.Data.Data1) < 1 {
-			return
+			return true, nil
 		}
 	}
 }
 
 // 项目制实习生
-func Get1(cookie string) {
+func Get1(cookie string) bool {
 	c := colly.NewCollector()
 	c.OnRequest(func(req *colly.Request) {
 		req.Headers.Set("authority", "talent.alibaba.com")
@@ -113,13 +120,13 @@ func Get1(cookie string) {
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, &test)
 		if err != nil {
-			fmt.Println("json解析错误")
+			fmt.Println("json解析错误", err)
 			return
 		}
 		if len(test.Data.Data1) < 1 {
 			return
 		}
-		Allali = append(Allali, test)
+		Allali = append(Allali, test.Data.Data1...)
 	})
 	i := 1
 	for {
@@ -141,11 +148,11 @@ func Get1(cookie string) {
 		err := c.PostRaw("https://talent.alibaba.com/position/search?_csrf="+cookie, Data)
 		if err != nil {
 			fmt.Printf("抓取第: %d出错", i)
-			return
+			return false
 		}
 		i++
 		if len(test.Data.Data1) < 1 {
-			return
+			return true
 		}
 	}
 }
