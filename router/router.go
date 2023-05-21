@@ -5,22 +5,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"sync"
 	"time"
-	_60 "xiangxiang/jackaroo/app/360"
-	"xiangxiang/jackaroo/app/Alibaba"
-	"xiangxiang/jackaroo/app/Baidu"
-	"xiangxiang/jackaroo/app/Meituan"
-	"xiangxiang/jackaroo/app/Tencent"
-	"xiangxiang/jackaroo/app/Wangyi"
-	"xiangxiang/jackaroo/app/Weiruan"
-	Bilibili "xiangxiang/jackaroo/app/bilibili"
-	"xiangxiang/jackaroo/app/huawei"
-	"xiangxiang/jackaroo/app/jingdong"
-	"xiangxiang/jackaroo/app/lilisi"
-	"xiangxiang/jackaroo/app/mihoyo"
-	"xiangxiang/jackaroo/app/xiaohongshu"
-	"xiangxiang/jackaroo/app/xiaomi"
-	"xiangxiang/jackaroo/app/zijie"
-	"xiangxiang/jackaroo/global"
+	"xiangxiang/jackaroo/app/logic/360"
+	"xiangxiang/jackaroo/app/logic/Alibaba"
+	"xiangxiang/jackaroo/app/logic/Baidu"
+	"xiangxiang/jackaroo/app/logic/Meituan"
+	"xiangxiang/jackaroo/app/logic/Tencent"
+	"xiangxiang/jackaroo/app/logic/Wangyi"
+	"xiangxiang/jackaroo/app/logic/Weiruan"
+	"xiangxiang/jackaroo/app/logic/bilibili"
+	"xiangxiang/jackaroo/app/logic/huawei"
+	"xiangxiang/jackaroo/app/logic/jingdong"
+	"xiangxiang/jackaroo/app/logic/lilisi"
+	"xiangxiang/jackaroo/app/logic/mihoyo"
+	"xiangxiang/jackaroo/app/logic/xiaohongshu"
+	"xiangxiang/jackaroo/app/logic/xiaomi"
+	"xiangxiang/jackaroo/app/logic/zijie"
+	"xiangxiang/jackaroo/app/model"
 )
 
 func Router() {
@@ -33,7 +33,7 @@ func Router() {
 		fmt.Println("引擎启动失败", err1)
 	}
 	//定时删除未更新的数据：即招聘公司已经撤销的招聘信息
-	global.DeleteStaleRecords(global.G_DB)
+	model.DeleteStaleRecords(model.GlobalDb)
 }
 
 // 并发爬取信息

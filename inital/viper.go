@@ -32,7 +32,7 @@ func Viper(path ...string) *viper.Viper {
 	}
 	v := viper.New()
 	v.AddConfigPath(".")
-	v.SetConfigFile(config)
+	v.SetConfigName(config)
 	v.SetConfigType("yaml")
 	err := v.ReadInConfig() // 查找并读取配置文件
 	if err != nil {         // 处理读取配置文件的错误

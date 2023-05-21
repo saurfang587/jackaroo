@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"xiangxiang/jackaroo/app/model"
 	"xiangxiang/jackaroo/global"
 	"xiangxiang/jackaroo/inital"
 	"xiangxiang/jackaroo/timer"
@@ -10,7 +11,7 @@ import (
 func main() {
 	//关闭数据库
 	defer func() {
-		db, _ := global.G_DB.DB()
+		db, _ := model.GlobalDb.DB()
 		err := db.Close()
 		if err != nil {
 			fmt.Println("数据库关闭失败")
@@ -26,9 +27,9 @@ func main() {
 // 配置初始化
 func init() {
 	global.G_VP = inital.Viper()
-	global.G_DB = inital.Gorm()
+	model.GlobalDb = model.New()
 	fmt.Print("数据库连接成功")
-	err := global.G_DB.AutoMigrate(&global.Hello{})
+	err := model.GlobalDb.AutoMigrate(&model.Job{})
 	if err != nil {
 		fmt.Println("表创建失败")
 		return
