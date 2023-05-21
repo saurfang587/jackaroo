@@ -2,7 +2,7 @@ CREATE
 DATABASE IF NOT EXISTS `jackaroo`;
 USE
 `jackaroo`;
-DEOP
+DROP
 TABLE IF EXISTS `job`;
 CREATE TABLE job
 (
