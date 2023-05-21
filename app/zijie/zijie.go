@@ -7,9 +7,11 @@ import (
 	"net/http"
 )
 
-func Handler(cookie string) {
+func Header(cookie string) (bool, error) {
 	token := GetCSRF()
-	fmt.Println(token)
+	if token == "" {
+		return false, nil
+	}
 	if cookie == "" {
 		cookie = "locale=zh-CN;channel=campus; platform=pc; atsx-csrf-token=" + token[:len(token)-1] + "%3D"
 	}
@@ -66,8 +68,7 @@ func Handler(cookie string) {
 
 		err := c.PostRaw("https://jobs.bytedance.com/api/v1/search/job/posts", b)
 		if err != nil {
-			fmt.Println("-=-=", err)
-			return
+			return false, err
 		}
 		i++
 		if len(rep.Data.List) < 1 {
@@ -75,7 +76,11 @@ func Handler(cookie string) {
 		}
 	}
 
-	zijieOrm(list)
+	pan, err := zijieOrm(list)
+	if pan == false {
+		return false, err
+	}
+	return true, nil
 }
 
 func GetCSRF() string {

@@ -36,11 +36,15 @@ type Data struct {
 }
 
 type List struct {
-	Id          string      `json:"id"`
+	Id          int         `json:"id"`
 	Title       string      `json:"title"`
 	JobCategory interface{} `json:"job_category"`
 	Description string      `json:"description"`
-	CityList    interface{} `json:"city_list"`
+	CityList    []Work      `json:"city_list"`
 	RecruitType interface{} `json:"recruit_Type"`
 	Requirement string      `json:"requirement"`
+}
+
+type Work struct {
+	Local string `json:"name"`
 }

@@ -3,16 +3,19 @@ package lilisi
 import (
 	"encoding/json"
 	"fmt"
+
+	//"fmt"
 	"github.com/gocolly/colly"
 	"net/http"
 )
 
-func Handler(cookie string) {
+func Header(cookie string) (bool, error) {
 	token := GetCSRF()
-	fmt.Println(token)
+	if token == "" {
+		return false, nil
+	}
 	if cookie == "" {
 		cookie = " locale=zh-CN; channel=saas-career; platform=pc;atsx-csrf-token=" + token[:len(token)-1] + "%3D"
-		//cookie = "device-id=7230726326599222841; locale=zh-CN; channel=saas-career; platform=pc; s_v_web_id=verify_lhfy2ntu_5yM198sQ_VhVS_4rYT_BGHG_qZ3PcDUljbni; atsx-csrf-token=Q7GQgHhQmepSzC4MISVXYLE07HTfnhQj_ZLsxtqlQBw%3D"
 	}
 	c := colly.NewCollector()
 	c.OnRequest(func(r *colly.Request) {
@@ -43,11 +46,10 @@ func Handler(cookie string) {
 	c.OnResponse(func(r *colly.Response) {
 		err := json.Unmarshal(r.Body, rep)
 		if err != nil {
-			fmt.Println("=-=-", err)
+
 		}
 		for i := 0; i < len(rep.Data.List); i++ {
 			list = append(list, *rep.Data.List[i])
-			//fmt.Printf("data:%+V", rep.Data)
 		}
 	})
 	i := 0
@@ -69,17 +71,18 @@ func Handler(cookie string) {
 
 		err := c.PostRaw("https://lilithgames.jobs.feishu.cn/api/v1/search/job/posts", b)
 		if err != nil {
-			fmt.Println(err)
+			return false, err
 		}
 		i++
 		if len(rep.Data.List) < 1 {
 			break
 		}
 	}
-	//fmt.Println(rep.Code)
-	//fmt.Println(len(list))
-	//fmt.Println(list)
-	lilisiOrm(list)
+	pan, err1 := lilisiOrm(list)
+	if pan == false {
+		return false, err1
+	}
+	return true, nil
 }
 
 func GetCSRF() string {
@@ -117,10 +120,10 @@ func GetCSRF() string {
 		if err != nil {
 			fmt.Println("=-=-", err)
 		}
-		fmt.Printf("data:%+V", rep.Data)
+		//fmt.Printf("data:%+V", rep.Data)
 	})
 
 	_ = c.PostRaw("https://lilithgames.jobs.feishu.cn/api/v1/csrf/token", nil)
-	fmt.Println(rep.Message)
+	//fmt.Println(rep.Message)
 	return rep.Data.Token
 }

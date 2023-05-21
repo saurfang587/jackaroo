@@ -38,6 +38,7 @@ type List struct {
 	CityIds          string `json:"cityIds"`
 	JobArea          string `json:"jobArea"`
 	WorkArea         string `json:"workArea"`
+	CreationDate     string `json:"creationDate"`
 }
 
 type List1 struct {

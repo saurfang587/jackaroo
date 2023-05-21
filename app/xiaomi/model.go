@@ -35,7 +35,7 @@ type Token struct {
 }
 
 type List struct {
-	Id          string      `json:"id"`
+	Id          int         `json:"id"`
 	Title       string      `json:"title"`
 	JobCategory JobCategory `json:"job_category"`
 	Description string      `json:"description"`

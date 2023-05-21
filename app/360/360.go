@@ -7,13 +7,11 @@ import (
 	"net/http"
 )
 
-func Handler(cookie string) {
-
+func Header(cookie string) (bool, error) {
 	list := []List{}
 	rep := &Rep{}
 	i := 0
 	j := 2
-
 	if cookie == "" {
 		cookie = "acw_tc=2760820416836328501224677eec1e85f4fd0a7ea63a3eacfa8050bf904c24"
 	}
@@ -44,12 +42,10 @@ func Handler(cookie string) {
 		_ = json.Unmarshal(r.Body, rep)
 		for i := 0; i < len(rep.Data); i++ {
 			list = append(list, *rep.Data[i])
-			//fmt.Printf("data:%+V\n", rep.Data)
 		}
 	})
 
 	for {
-
 		req := &Req{
 			Category: j,
 			DisplayFields: []string{"Category",
@@ -75,9 +71,8 @@ func Handler(cookie string) {
 		err := c.PostRaw("https://360campus.zhiye.com/api/Jobad/GetJobAdPageList", b)
 		if err != nil {
 			fmt.Println("-=-=", err)
-			return
+			return false, err
 		}
-
 		i++
 		if len(rep.Data) < 1 {
 
@@ -88,8 +83,9 @@ func Handler(cookie string) {
 			i = 0
 		}
 	}
-	//fmt.Println(j)
-	_60Orm(list)
-	//fmt.Println(len(list))
-
+	pan, err := _60Orm(list)
+	if pan == false {
+		return false, err
+	}
+	return true, nil
 }

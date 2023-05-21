@@ -6,10 +6,10 @@ import (
 	"net/http"
 )
 
-func Handler(cookie string) {
+func Header(cookie string) (bool, error) {
 	token := GetCSRF()
-	if cookie == "" {
-		cookie = "device-id=; locale=zh-CN; channel=saas-career; platform=pc; s_v_web_id=verify_lhe9e1pw_KV7VxS41_R6aN_4Riw_BglK_Q5ouWlR3Id6U; atsx-csrf-token=" + token[:len(token)-1] + "%3D"
+	if token == "" {
+		return false, nil
 	}
 	c := colly.NewCollector()
 	c.OnRequest(func(r *colly.Request) {
@@ -66,7 +66,11 @@ func Handler(cookie string) {
 		}
 	}
 
-	xiaomiOrm(list)
+	pan, err := xiaomiOrm(list)
+	if pan == false {
+		return false, err
+	}
+	return true, nil
 }
 
 func GetCSRF() string {

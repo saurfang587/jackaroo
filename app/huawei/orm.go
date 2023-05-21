@@ -1,52 +1,42 @@
 package huawei
 
 import (
-	"strconv"
+	"fmt"
+	"gorm.io/gorm"
 	"time"
 	"xiangxiang/jackaroo/global"
-	"xiangxiang/jackaroo/model"
 )
 
-func huaweiOrm(list []List) {
-	jobs := []model.Job{}
-
+func huaweiOrmS(list []List, list1 []List1) (bool, error) {
+	time1 := time.Now().Format("2006-01-02 15:04:05")
 	for i := 0; i < len(list); i++ {
-		if list[i].JobRequire == "请您详见岗位意向中的岗位要求" {
+		job := &global.Hello{
+			ID:           list[i].JobId,
+			Company:      "华为",
+			Title:        list[i].Jobname + list1[i].DISPLAYNAME,
+			JobDetail:    "Duty:\n" + list1[i].MAINBUSINESS + "\nRequire:\n" + list1[i].DEMAND,
+			JobCategory:  list[i].JobFamilyName,
+			JobTypeName:  "校园招聘",
+			WorkLocation: global.Work{list1[i].LOCDESCS},
+			PushTime:     list[i].CreationDate,
+			FetchTime:    time1,
+		}
+		//首先查询是否存在 不存在就创建，存在的话就更新时间  对于时间超过1小时未做任何更改的数据，进行删除
+		err3 := global.G_DB.Where("title= ? AND job_category=? AND job_type_name = ? AND job_location=?", job.Title, job.JobCategory, job.JobTypeName, job.WorkLocation).First(&global.Hello{}).Error
+		if err3 == gorm.ErrRecordNotFound {
+			//创建成功的话 就不用更新抓取时间了
+			err1 := global.G_DB.Create(job).Error
+			if err1 != nil {
+				fmt.Println("插入数据失败了，请查看并修改错误")
+				return false, err1
+			}
 			continue
 		}
-		job := model.Job{
-			Id:          strconv.Itoa(list[i].JobId) + " " + strconv.Itoa(list[i].JobRequirementId),
-			Company:     "华为",
-			Title:       list[i].Jobname,
-			JobDetail:   "Duty:\n" + list[i].MainBusiness + "\nRequire:\n" + list[i].JobRequire,
-			JobCategory: list[i].JobFamilyName,
-			JobTypeName: "校园招聘",
-			JobLocation: list[i].WorkArea,
-			PushTime:    "",
-			FetchTime:   time.Now(),
+		err1 := global.G_DB.Where("title=?", job.Title).First(&global.Hello{}).Set("fetch_time", time1).Error
+		if err1 != nil {
+			fmt.Println("更新数据库中表的时间出错")
+			return false, err1
 		}
-
-		jobs = append(jobs, job)
 	}
-
-	global.G_DB.Create(&jobs)
-}
-
-func huaweiOrmS(list List, list1 []*List1) {
-
-	for i := 0; i < len(list1); i++ {
-
-		job := model.Job{
-			Id:          strconv.Itoa(list.JobId) + " " + strconv.Itoa(list.JobRequirementId),
-			Company:     "华为",
-			Title:       list.Jobname + list1[i].DISPLAYNAME,
-			JobDetail:   "Duty:\n" + list1[i].MAINBUSINESS + "\nRequire:\n" + list1[i].DEMAND,
-			JobCategory: list.JobFamilyName,
-			JobTypeName: "校园招聘",
-			JobLocation: list1[i].LOCDESCS,
-			PushTime:    "",
-			FetchTime:   time.Now(),
-		}
-		global.G_DB.Create(&job)
-	}
+	return true, nil
 }

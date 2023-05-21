@@ -8,8 +8,9 @@ import (
 	"strconv"
 )
 
-func Handler(cookie string) {
+var Alllist1 []List1
 
+func Header(cookie string) (bool, error) {
 	list := []List{}
 	rep := &Rep{}
 	i := 1
@@ -51,8 +52,7 @@ func Handler(cookie string) {
 		url := "https://career.huawei.com/reccampportal/services/portal/portalpub/getJob/newHr/page/10/" + a + "?curPage=" + a + "&pageSize=10&jobTypes=" + b + "&jobType=0&jobFamClsCode=&searchText=&cityCode=&countryCode=&deptCode=&graduateItem=&language=zh_CN"
 		err := c.Visit(url)
 		if err != nil {
-			fmt.Println("-=-=", err)
-			return
+			return false, err
 		}
 
 		i++
@@ -65,10 +65,9 @@ func Handler(cookie string) {
 			i = 1
 		}
 	}
-	huaweiOrm(list)
+	//huaweiOrm(list)
 
-	fmt.Println("第一步完成")
-	temp := List{}
+	//temp := List{}
 	d := colly.NewCollector()
 	d.OnRequest(func(r *colly.Request) {
 		r.Method = http.MethodPost
@@ -87,38 +86,40 @@ func Handler(cookie string) {
 		r.Headers.Add("x-csrf-token", "undefined")
 	})
 	//rep1 := &Rep1{}
-	list1 := []*List1{}
+	list1 := []List1{}
 	d.OnResponse(func(r *colly.Response) {
-		fmt.Println(r.StatusCode)
+
 		//fmt.Println(r.Body)
 		err := json.Unmarshal(r.Body, &list1)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
+		if list1 == nil {
+			return
+		}
+		Alllist1 = append(Alllist1, list1...)
 
-		huaweiOrmS(temp, list1)
 		//for a := 0; a < len(r); a++ {
 		//list1 = append(list1, *rep1[].Data[a])
-		fmt.Printf("data:%+V\n", list1)
+		//fmt.Printf("data:%+V\n", list1)
 		//}
 	})
 
 	for a := 0; a < len(list); a++ {
-		if list[a].JobRequire == "请您详见岗位意向中的岗位要求" || list[a].JobRequire == "专业知识要求：\\n/" {
-			continue
-		}
-		temp = list[a]
-		fmt.Println(strconv.Itoa(list[a].DataSource))
+		//if list[a].JobRequire == "请您详见岗位意向中的岗位要求" || list[a].JobRequire == "专业知识要求：\\n/" {
+		//	continue
+		//}
+		//temp = list[a]
 		err := d.Visit("https://career.huawei.com/reccampportal/services/portal/portaluser/findIntentListByJobRequirementId/newHr/zh_CN/" + strconv.Itoa(list[a].JobRequirementId) + "/2?dataSource=" + strconv.Itoa(list[a].DataSource) + "&jobId=" + strconv.Itoa(list[a].JobId))
 		if err != nil {
 			fmt.Println(err)
-			return
+			return false, err
 		}
-
 	}
-	//fmt.Println(list[0].JobRequirementId)
-	//fmt.Println(list[0].JobId)
-	fmt.Println()
-
+	pan, err1 := huaweiOrmS(list, Alllist1)
+	if pan == false {
+		return false, err1
+	}
+	return true, nil
 }
