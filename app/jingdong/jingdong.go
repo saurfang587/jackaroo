@@ -7,12 +7,22 @@ import (
 	"net/http"
 )
 
-func Handler(cookie string) {
+var List1 []List
 
-	list := []List{}
+func Header(cookie string) (bool, error) {
+	pan, err := Get(cookie)
+	if pan == false {
+		return false, err
+	}
+	pan1, err1 := Jingdong_orm()
+	if pan1 == false {
+		return false, err1
+	}
+	return true, nil
+}
+func Get(cookie string) (bool, error) {
 	rep := &Rep{}
 	i := 0
-
 	if cookie == "" {
 		cookie = ""
 	}
@@ -39,13 +49,11 @@ func Handler(cookie string) {
 		_ = json.Unmarshal(r.Body, rep)
 		//fmt.Println("=-=-=-=", rep.Success)
 		for i := 0; i < len(rep.Data.List); i++ {
-			list = append(list, *rep.Data.List[i])
-			fmt.Printf("data:%+V\n", rep.Data)
+			List1 = append(List1, rep.Data.List[i])
 		}
 	})
 
 	for {
-
 		req := &Req{
 			PageIndex: i,
 			PageSize:  10,
@@ -63,15 +71,25 @@ func Handler(cookie string) {
 		err := c.PostRaw(url, b)
 		if err != nil {
 			fmt.Println("-=-=", err)
-			return
+			return false, err
 		}
-
 		i++
 		if len(rep.Data.List) < 1 {
 			break
 		}
 	}
+	return true, nil
+}
 
-	fmt.Println(len(list))
-
+// 去除重复元素
+func removeDuplicates(nums []Work1) []string {
+	m := make(map[string]bool)
+	result := []string{}
+	for _, num := range nums {
+		if !m[num.Location] {
+			m[num.Location] = true
+			result = append(result, num.Location)
+		}
+	}
+	return result
 }

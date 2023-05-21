@@ -19,7 +19,7 @@ type IdResponse struct {
 
 type DataResponse struct {
 	Code    int    `json:"code"`
-	Data    *Data  `json:"data"`
+	Data    Data   `json:"data"`
 	Message string `json:"message"`
 }
 
@@ -31,13 +31,17 @@ type List struct {
 }
 
 type Data struct {
-	ObjectId          string            `json:"objectId"`
-	AddressDetailList AddressDetailList `json:"addressDetailList"`
-	Description       string            `json:"description"`
-	JobNature         string            `json:"jobNature"`
-	JobRequire        string            `json:"jobRequire"`
-	ObjectName        string            `json:"objectName"`
-	Title             string            `json:"title"`
+	ObjectId        int    `json:"objectId"`
+	WorkLocation    []Work `json:"addressDetailList"`
+	Job_Description string `json:"description"`
+	Job_type_name   string `json:"jobNature"`
+	Job_Require     string `json:"jobRequire"`
+	Job_ObjectName  string `json:"objectName"`
+	Title           string `json:"title"`
+	Job_category    string `json:"competencyType"`
+}
+type Work struct {
+	Location string `json:"addressDetail"`
 }
 
 type AddressDetailList struct {

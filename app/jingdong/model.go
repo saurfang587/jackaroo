@@ -1,5 +1,10 @@
 package jingdong
 
+import (
+	"database/sql/driver"
+	"encoding/json"
+)
+
 type Req struct {
 	PageIndex int       `json:"pageIndex"`
 	PageSize  int       `json:"pageSize"`
@@ -20,22 +25,30 @@ type Rep struct {
 }
 
 type Data struct {
-	List []*List `json:"items"`
+	List []List `json:"items"`
 }
 
 type List struct {
-	PositionName  string `json:"positionName,omitempty"`
-	JobCategory   string `json:"jobCategory,omitempty"`
-	JobDirection  string `json:"jobDirection,omitempty"`
-	Qualification string `json:"qualification,omitempty"`
-	WorkContent   string `json:"workContent,omitempty"`
-	//WorkCity          string            `json:"workCity,omitempty"`
-	RequirementVoList requirementVoList `json:"requirementVoList"`
+	Id           int     `json:"jobCategoryCode"`
+	PositionName string  `json:"positionName,omitempty"`
+	JobCategory  string  `json:"jobCategory,omitempty"`
+	Job_obsity   string  `json:"qualification,omitempty"`
+	Job_detail   string  `json:"workContent"`
+	WorkCity     []Work1 `json:"requirementVoList"`
+	Pushtime     int     `json:"publishTime"`
 }
 
-type requirementVoList struct {
-	InterviewCity string `json:"interviewCity,omitempty"`
-	PositionBg    string `json:"positionBg,omitempty"`
-	PositionDept  string `json:"positionDept,omitempty"`
-	WorkCity      string `json:"workCity,omitempty"`
+type Work1 struct {
+	Location string `json:"workCity"`
+}
+
+type Location []string
+
+func (l *Location) Scan(value interface{}) error {
+	bytevalues := value.([]byte)
+	return json.Unmarshal(bytevalues, l)
+}
+
+func (l Location) Value() (driver.Value, error) {
+	return json.Marshal(l)
 }

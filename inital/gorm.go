@@ -3,6 +3,7 @@ package inital
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"xiangxiang/jackaroo/global"
 )
 
@@ -31,7 +32,6 @@ func GormMysql() *gorm.DB {
 		DontSupportRenameColumn:   true,                        // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
 		SkipInitializeWithVersion: false,                       // 根据版本自动配置
 	})
-
 	if db, err := gorm.Open(mysqlInstance, gormConfig()); err != nil {
 		return nil
 	} else {
@@ -39,13 +39,15 @@ func GormMysql() *gorm.DB {
 		sqlDb.SetMaxIdleConns(msq.MaxIdleConns)
 		sqlDb.SetMaxOpenConns(msq.MaxOpenConns)
 		sqlDb.SetConnMaxLifetime(msq.ConnMaxLifetime)
-
 		return db
 	}
 
 }
 
 func gormConfig() *gorm.Config {
-	config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
+	config := &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+		Logger:                                   logger.Default.LogMode(logger.Silent),
+	}
 	return config
 }

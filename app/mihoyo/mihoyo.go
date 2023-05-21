@@ -7,9 +7,21 @@ import (
 	"net/http"
 )
 
-func Handler(cookie string) {
+var list []string
+var list2 []Data
 
-	list := []List{}
+func Header(cookie string) (bool, error) {
+	pan, err := Get(cookie)
+	if pan == false {
+		return false, err
+	}
+	pan1, err1 := Mihoyo_orm()
+	if pan1 == false {
+		return false, err1
+	}
+	return true, nil
+}
+func Get(cookie string) (bool, error) {
 	rep := &IdResponse{}
 	i := 1
 
@@ -41,8 +53,7 @@ func Handler(cookie string) {
 	c.OnResponse(func(r *colly.Response) {
 		_ = json.Unmarshal(r.Body, rep)
 		for i := 0; i < len(rep.Data.List); i++ {
-			list = append(list, *rep.Data.List[i])
-			//fmt.Printf("data:%+V\n", rep.Data)
+			list = append(list, rep.Data.List[i].Id)
 		}
 	})
 
@@ -53,29 +64,25 @@ func Handler(cookie string) {
 			PageNo:           i,
 			PageSize:         10,
 		}
-
 		b, _ := json.Marshal(req)
 		url := "https://ats.openout.mihoyo.com/ats-portal/v1/job/list"
 		err := c.PostRaw(url, b)
 		if err != nil {
 			fmt.Println("-=-=", err)
-			return
+			return false, err
 		}
-
 		i++
 		if len(rep.Data.List) < 1 {
 			break
 		}
 	}
-
-	fmt.Println(len(list))
-	Fetch(list)
+	pan, err := Fetch(list)
+	if pan == false {
+		return false, err
+	}
+	return true, nil
 }
-
-func Fetch(list []List) {
-
-	rep := &DataResponse{}
-	Data := []*Data{}
+func Fetch(list []string) (bool, error) {
 	c := colly.NewCollector()
 	c.OnRequest(func(r *colly.Request) {
 		r.Method = http.MethodPost
@@ -97,27 +104,24 @@ func Fetch(list []List) {
 		r.Headers.Add("sec-ch-ua-platform", "\"Windows\"")
 		//r.Headers.Add("x-request-id", "front-1683791534755-4452-1370-407263067")
 	})
-
+	test := DataResponse{}
 	c.OnResponse(func(r *colly.Response) {
-		_ = json.Unmarshal(r.Body, rep)
-		Data = append(Data, rep.Data)
-		fmt.Printf("data:%+V\n", rep.Data)
-
+		_ = json.Unmarshal(r.Body, &test)
+		list2 = append(list2, test.Data)
 	})
 
 	for j := 0; j < len(list); j++ {
 		req := &Request{
 			ChannelDetailIds: []int{1},
-			Id:               list[j].Id,
+			Id:               list[j],
 		}
 
 		b, _ := json.Marshal(req)
 		url := "https://ats.openout.mihoyo.com/ats-portal/v1/job/info"
 		err := c.PostRaw(url, b)
 		if err != nil {
-			fmt.Println("-=-=", err)
-			return
+			return false, err
 		}
 	}
-
+	return true, nil
 }

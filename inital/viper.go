@@ -17,7 +17,7 @@ func Viper(path ...string) *viper.Viper {
 		flag.Parse()
 		if config == "" { // 优先级: main > 命令行 > 环境变量 > 默认值
 			if configEnv := os.Getenv("G_CONFIG"); configEnv == "" {
-				config = "config.prod.yaml"
+				config = "config.yaml"
 				fmt.Printf("您正在使用config的默认值,config的路径为%v\n", config)
 			} else {
 				config = configEnv
